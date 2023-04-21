@@ -1,0 +1,10 @@
+body,
+html {
+    height: 100vh;
+    background-color: #282828;
+    font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, Ubuntu;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
