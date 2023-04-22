@@ -1,0 +1,35 @@
+<?php
+namespace App\Http\Controllers;
+
+use App\Services\Bootstrap\BootstrapData;
+use App\Services\Settings;
+
+class HomeController extends BaseController {
+
+
+    public function __construct(BootstrapData $bootstrapData, Settings $settings)
+    {
+        $this->bootstrapData = $bootstrapData;
+        $this->settings = $settings;
+    }
+
+	public function show()
+	{
+	    // only get meta tags if we're actually
+        // rendering homepage and not a fallback route
+        $data = [];
+	    if (request()->path() === '/' && $response = $this->handleSeo($data)) {
+            return $response;
+        }
+
+	    $view = view('app')
+            ->with('bootstrapData', $this->bootstrapData->init()->getEncoded())
+            ->with('customHtmlPath', public_path('storage/custom-code/custom-html.html'))
+            ->with('customCssPath', public_path('storage/custom-code/custom-styles.css'));
+
+	    if (isset($data['seo'])) {
+	        $view->with('meta', $data['seo']);
+        }
+        return response($view);
+	}
+}

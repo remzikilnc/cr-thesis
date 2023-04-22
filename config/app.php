@@ -159,7 +159,7 @@ return [
         /*
          * Package Service Providers...
          */
-        \Common\CommonServiceProvider::class,
+        \App\Providers\CommonServiceProvider::class,
 
 
         /*

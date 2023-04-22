@@ -3,8 +3,14 @@
 namespace App\Models;
 
 
-use Common\Auth\BaseUser;
-use Laravel\Sanctum\HasApiTokens;
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\DatabaseNotification;
+use Illuminate\Notifications\DatabaseNotificationCollection;
+use Illuminate\Notifications\Notifiable;
+use Laravel\Passport\HasApiTokens;
+use Spatie\Permission\Traits\HasRoles;
 
 /*use Illuminate\Support\Collection;
 use App\ListModel;
@@ -13,20 +19,81 @@ use Common\Comments\Comment;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;*/
 
-class User extends BaseUser
+class User extends Authenticatable
 {
-    use HasApiTokens;
+    use Notifiable, HasRoles, HasApiTokens;
 
-/*
-    public function reviews(): HasMany
+    const MODEL_TYPE = 'user';
+
+    protected $guarded = ['id','created_at', 'updated_at', 'avatar'];
+    protected $hidden = ['password', 'remember_token'];
+    protected $casts = ['id' => 'integer', 'email_verified_at' => 'datetime',];
+    protected $appends = ['model_type'];
+
+
+    public function __construct(array $attributes = [])
     {
-        return $this->hasMany(Review::class);
+        parent::__construct($attributes);
     }
 
-    public function lists(): HasMany
+
+    /*
+        public function reviews(): HasMany
+        {
+            return $this->hasMany(Review::class);
+        }
+
+        public function lists(): HasMany
+        {
+            return $this->hasMany(ListModel::class);
+        }
+
+    */
+
+    public static function findAdmin(): ?self
     {
-        return $this->hasMany(ListModel::class);
+        //Todo
     }
 
-*/
+    public function refreshApiToken($tokenName): string
+    {
+        $this->tokens()->where('name', $tokenName)->delete();
+        $newToken = $this->createToken($tokenName);
+        $this->withAccessToken($newToken->accessToken);
+        return $newToken->plainTextToken;
+    }
+
+    public function toSearchableArray(): array
+    {
+        return [
+            'id' => $this->id,
+            'first_name' => $this->first_name,
+            'last_name' => $this->last_name,
+            'email' => $this->email,
+            'created_at' => $this->created_at->timestamp ?? '_null',
+            'updated_at' => $this->updated_at->timestamp ?? '_null',
+        ];
+    }
+
+    public static function filterableFields(): array
+    {
+        return ['id', 'created_at', 'updated_at'];
+    }
+
+    public function toNormalizedArray(): array
+    {
+        return [
+            'id' => $this->id,
+            'name' => $this->display_name,
+            'description' => $this->email,
+            'image' => $this->avatar,
+            'model_type' => self::MODEL_TYPE,
+        ];
+    }
+
+    public static function getModelTypeAttribute(): string
+    {
+        return self::MODEL_TYPE;
+    }
+
 }
