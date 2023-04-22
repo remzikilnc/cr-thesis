@@ -14,7 +14,6 @@ use function Symfony\Component\Translation\t;
 class AuthController extends BaseController
 {
 
-    //Todo tekrar yapılandır
     public function register(Request $request): JsonResponse
     {
 
