@@ -9,6 +9,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\DatabaseNotification;
 use Illuminate\Notifications\DatabaseNotificationCollection;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Collection;
 use Laravel\Passport\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 
@@ -80,15 +81,26 @@ class User extends Authenticatable
         return ['id', 'created_at', 'updated_at'];
     }
 
-    public function toNormalizedArray(): array
+
+
+    public function getRoleNamesAttribute(): Collection
     {
-        return [
-            'id' => $this->id,
-            'name' => $this->display_name,
-            'description' => $this->email,
-            'image' => $this->avatar,
-            'model_type' => self::MODEL_TYPE,
-        ];
+        return $this->roles->pluck('name');
+    }
+
+    public function getPermissionNamesAttribute(): Collection
+    {
+        return $this->getPermissionsViaRoles()->pluck('name');
+    }
+
+    public function toNormalizedArray()
+    {
+        $array = parent::toArray();
+
+        $array['role_names'] = $this->roleNames;
+        $array['permission_names'] = $this->permissionNames;
+
+        return $array;
     }
 
     public static function getModelTypeAttribute(): string

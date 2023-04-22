@@ -160,7 +160,7 @@ return [
          * Package Service Providers...
          */
         \App\Providers\CommonServiceProvider::class,
-
+        Spatie\Permission\PermissionServiceProvider::class,
 
         /*
          * Application Service Providers...

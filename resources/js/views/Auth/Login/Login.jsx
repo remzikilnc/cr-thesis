@@ -13,8 +13,10 @@ import {
 } from "@/views/Auth/styles";
 import CheckboxContainer from "@/components/CustomFormComponents/CustomCheckbox";
 import AlertDanger from "@/components/CustomFormComponents/Alert/AlertDanger";
-
 import {saveAuthUser} from "@/store/AuthStore";
+import {attemptUserLogin} from "@/services/index";
+
+
 
 function Login() {
 
@@ -23,22 +25,19 @@ function Login() {
     const dispatch = useDispatch();
 
     function handleSumbit(values, actions) {
-        axios.post(`${import.meta.env.VITE_APP_API_URL}auth/login`,{...values})
-            .then((res) => {
-                if (res.data.success){
-                    dispatch(saveAuthUser({
-                        isLoggedIn : true,
-                        user: res.data.user,
-                        token: res.data.token
-                    }))
-                    navigate("/");
-                    actions.setSubmitting(false);
-                }
-            }).catch((error)=>{
-                console.log(error)
-            if (error.response){
-                console.log(error.response.data)
-                setError(error.response.data.message);
+        attemptUserLogin({ ...values }).then((res) => {
+            if (res.success) {
+                dispatch(saveAuthUser({
+                    isLoggedIn: true,
+                    user: res.data.user,
+                    token: res.data.token
+                }))
+                navigate("/");
+                actions.setSubmitting(false);
+            }
+        }).catch((error) => {
+            if (error.message) {
+                setError(error.message);
                 actions.setSubmitting(false);
             }
         })
@@ -48,13 +47,13 @@ function Login() {
         <Card>
             <Body>
                 <LeadFont className="mt-0.5">Hesabına giriş yap</LeadFont>
-                { error !== '' && ( <AlertDanger text={error}/>) }
+                {error !== '' && (<AlertDanger text={error}/>)}
                 <form className="mt-5">
                     <Formik initialValues={{
-                        email: '', password: '', remember:false
+                        email: '', password: '', remember: false
                     }} onSubmit={handleSumbit} validationSchema={Yup.object().shape({
-                        password: Yup.string().required('Bir parola girmen gerekiyor.').min(6, 'Parola en az 6 karakterden oluşmalı.').max(32,'Parola en fazla 32 karakter olabilir'),
-                        email: Yup.string().required('Geçerli bir e-posta adresi girmen gerekiyor.').email('Geçerli bir e-posta adresi girmen gerekiyor.').max(128,'Eposta en fazla 128 karakter olabilir'),
+                        password: Yup.string().required('Bir parola girmen gerekiyor.').min(6, 'Parola en az 6 karakterden oluşmalı.').max(32, 'Parola en fazla 32 karakter olabilir'),
+                        email: Yup.string().required('Geçerli bir e-posta adresi girmen gerekiyor.').email('Geçerli bir e-posta adresi girmen gerekiyor.').max(128, 'Eposta en fazla 128 karakter olabilir'),
                         remember: Yup.boolean.required
                     })}>
                         {({
@@ -109,7 +108,8 @@ function Login() {
                                         <span className="absolute top-0 bottom-0 right-0 px-4 py-3"></span>
                                     </div>}
                                 </div>
-                                <div className="flex"><Link href="@/frontend/views/Auth/Login/Login#">Parolanı mı unuttun?</Link></div>
+                                <div className="flex"><Link href="@/frontend/views/Auth/Login/Login#">Parolanı mı
+                                    unuttun?</Link></div>
                                 <div className="mb-6 mt-5 items-start flex">
                                     <label className={"flex justify-center items-center"}>
                                         <CheckboxContainer
@@ -121,7 +121,8 @@ function Login() {
                                         <span className={"text-black font-thin"}>Beni Hatırla</span>
                                     </label>
                                 </div>
-                                <DefaultButton className={"mt-2"} onClick={handleSubmit} type="submit" disabled={!isValid || isSubmitting}>Giriş Yap</DefaultButton>
+                                <DefaultButton className={"mt-2"} onClick={handleSubmit} type="submit"
+                                               disabled={!isValid || isSubmitting}>Giriş Yap</DefaultButton>
                             </>
                         )}
                     </Formik>

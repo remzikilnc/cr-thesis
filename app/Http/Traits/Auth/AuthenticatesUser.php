@@ -104,11 +104,12 @@ trait AuthenticatesUser
             return $this->authenticated($request, $request->user());
         }
 
+        $user = $this->guard()->user()->toNormalizedArray();
         return response()->json([
             'success' => true,
             'message' => 'Successfully',
             'data' => [
-                'user' => $this->guard()->user(),
+                'user' => $user,
                 'token' => $token
 
             ]
@@ -123,14 +124,13 @@ trait AuthenticatesUser
 
     public function logout(Request $request)
     {
-        $this->guard()->logout();
         $user = $request->user();
-        $accessToken = $user->token();
-
-        if ($accessToken) {
-            $accessToken->revoke();
+        if ($user){
+            $accessToken = $user->token();
+            if ($accessToken) {
+                $accessToken->revoke();
+            }
         }
-
         return response()->json([
             'success' => true,
             'message' => 'Successfully logged out',

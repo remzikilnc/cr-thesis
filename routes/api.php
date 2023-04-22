@@ -12,6 +12,8 @@ Route::group(["prefix" => "v1",], function () {
     Route::group(["prefix" => "auth",], function () {
         Route::post("register", [\App\Http\Controllers\Auth\RegisterController::class,'register']);
         Route::post("login", [\App\Http\Controllers\Auth\LoginController::class,'login']);
+        Route::post("logout",  [\App\Http\Controllers\Auth\LoginController::class,'logout']);
+
         // FORGOT/RESET PASSWORD
 /*        Route::post('password/email', 'SendPasswordResetEmailController@sendResetLinkEmail');
         Route::post('password/reset', 'ResetPasswordController@reset');*/
@@ -20,7 +22,6 @@ Route::group(["prefix" => "v1",], function () {
     Route::group([
         "middleware" => ['auth:api'],
     ], function () {
-        Route::post("logout",  [\App\Http\Controllers\Auth\LoginController::class,'logout']);
         Route::post('/authenticate', [\App\Http\Controllers\AuthController::class, "authenticate"]);
     });
 

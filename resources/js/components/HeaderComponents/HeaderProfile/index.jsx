@@ -11,22 +11,19 @@ import {useDispatch, useSelector} from "react-redux";
 import {removeAuthUser} from "@/store/AuthStore";
 import {Menu} from '@headlessui/react'
 import Avatar from "@/assets/images/marvel.jpg"
-
+import {attemptUserLogout} from "@/services/index";
 
 function HeaderProfile() {
     const dispatch = useDispatch();
     const {authUser} = useSelector((state) => state.auth);
     const user = authUser.user;
     useEffect(() => {
-        /*  console.log(authUser)*/
     }, [authUser]);
 
     function logout() {
-        axios.post(`${import.meta.env.VITE_APP_API_URL}logout`, {}, {
-            headers: {
-                Authorization: 'Bearer ' + authUser?.token?.access_token
-            }
-        }).then(res => res).catch(e => e)
+        attemptUserLogout({ Authorization: 'Bearer ' + authUser?.token?.access_token })
+            .then(res => res)
+            .catch(e => e)
         dispatch(removeAuthUser());
     }
 
@@ -43,8 +40,8 @@ function HeaderProfile() {
             </span>
             </div>
             <Menu.Button className={"flex text-left justify-center items-center h-full"}>
-                <div className="user mx-2 w-[172px]">
-                    {user.name && <p className="truncate text-themeLighterPassive font-semibold text-sm break-words">{user.name}</p>}
+                <div className="user mr-2 ml-3 w-[172px]">
+                    {user.first_name && user.last_name && <p className="truncate text-themeLighterPassive font-semibold text-sm break-words">{user.first_name +' '+ user.last_name}</p>}
                 </div>
                     <span className={"dropdownIcon ml-auto cursor-pointer"}>
                         <Icon name={'dropdown'} fill={'#ffffff'} size={20}></Icon>

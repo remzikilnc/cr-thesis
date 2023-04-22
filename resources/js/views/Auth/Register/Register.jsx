@@ -3,7 +3,6 @@ import {Formik} from "formik";
 import * as Yup from "yup";
 import {NavLink, useNavigate} from "react-router-dom";
 import {  useDispatch } from 'react-redux'
-
 import {
     Card,
     Body,
@@ -13,6 +12,11 @@ import {
 } from "@/views/Auth/styles";
 import AlertDanger from "@/components/CustomFormComponents/Alert/AlertDanger";
 import {saveAuthUser} from "@/store/AuthStore";
+import {attemptUserRegister} from "@/services/index";
+
+
+
+
 function Register() {
     const [backErrors, setBackErrors] = useState({});
     const [backError, setBackError] = useState('');
@@ -21,28 +25,26 @@ function Register() {
     const dispatch = useDispatch()
 
     function handleSumbit(values, actions) {
-        axios.post(`${import.meta.env.VITE_APP_API_URL}auth/register`,{...values})
-            .then((res) => {
-                if (res.data.success){
-                    dispatch(saveAuthUser({
-                        isLoggedIn : true,
-                        user: res.data.data.user,
-                        token: res.data.data.token
-                    }))
-                    navigate("/");
-                    actions.setSubmitting(false);
-                }
-            }).catch((error)=>{
-            if (error.response){
-                let errorData = error.response.data.errors;
+        attemptUserRegister({ ...values }).then((res) => {
+            if (res.success) {
+                dispatch(saveAuthUser({
+                    isLoggedIn: true,
+                    user: res.data.user,
+                    token: res.data.token
+                }))
+                navigate("/");
+                actions.setSubmitting(false);
+            }
+        }).catch((error)=>{
+            if (error.errors){
+                let errorData = error.errors;
                 if(typeof errorData === 'object' && errorData !== null){
                     setBackErrors(errorData);
                 }
-                else {
-                    setBackError(error.response.data.message);
-                }
-                actions.setSubmitting(false);
+            }else {
+                setBackError(error.message);
             }
+            actions.setSubmitting(false);
         })
 
     }
@@ -62,7 +64,8 @@ function Register() {
                 <form className="mt-5" method="post">
                     <Formik
                         initialValues={{
-                            name:'',
+                            first_name:'',
+                            last_name:'',
                             email:'',
                             password:'',
                             password_confirmation:''
@@ -70,9 +73,10 @@ function Register() {
                         onSubmit={handleSumbit}
                         validationSchema={
                             Yup.object().shape({
-                                name: Yup.string().required('Geçerli bir ad ve soyad girmen gerekiyor.').min(4, 'Adın ve soyadın en az 4 karakterden oluşmalı').trim(),
-                                email: Yup.string().email('Geçerli bir e-posta adresi girmen gerekiyor.').required('E-posta adresini girmen gerekiyor.').max(128,'Eposta en fazla 128 karakter olabilir').trim(),
-                                password: Yup.string().required('Bir parola girmen gerekiyor.').min(6, 'Parola en az 6 karakterden oluşmalı.').max(32,'Parola en fazla 32 karakter olabilir'),
+                                first_name: Yup.string().required('Geçerli bir ad girmen gerekiyor.').min(4, 'Adın en az 4 karakterden oluşmalı').trim(),
+                                last_name: Yup.string().required('Geçerli bir soyad girmen gerekiyor.').min(4, 'Soyadın en az 4 karakterden oluşmalı').trim(),
+                                email: Yup.string().email('Geçerli bir e-posta adresi girmen gerekiyor.').required('E-posta adresini girmen gerekiyor.').min(6,'E-posta adresini girmen gerekiyor').max(128,'E-posta en fazla 128 karakter olabilir').trim(),
+                                password: Yup.string().required('Bir parola girmen gerekiyor.').min(6, 'Parola en az 6 karakterden oluşmalı.').max(32,'Parola en fazla 64 karakter olabilir'),
                                 password_confirmation:Yup.string().oneOf([Yup.ref('password'),null],'Parolanı onaylaman gerekiyor.')
                             })}>
                         {({
@@ -86,20 +90,37 @@ function Register() {
                               touched
                           }) => (
                             <>
-                                <div className="mb-4">
-                                    <DefaultLabel htmlFor="name">Ad Soyad</DefaultLabel>
-                                    <DefaultInput
-                                        className={errors.name && touched.name ? "border border-red-400 placeholder-red-400" : ""}
-                                        autoComplete={"name"}
-                                        type="text"
-                                        name="name"
-                                        id="name"
-                                        placeholder="Adın ve soyadın."
-                                        onBlur={handleBlur}
-                                        value={values.name}
-                                        onChange={handleChange('name')}>
-                                    </DefaultInput>
-                                    {(errors.name && touched.name) && <AlertDanger text={errors.name}/> }
+                                <div className="flex row  grid grid-cols-2 gap-x-4">
+                                    <div className="mb-4 ">
+                                        <DefaultLabel htmlFor="first-name">Ad</DefaultLabel>
+                                        <DefaultInput
+                                            className={errors.first_name && touched.first_name ? "border border-red-400 placeholder-red-400" : ""}
+                                            autoComplete={"given-name"}
+                                            type="text"
+                                            name="first_name"
+                                            id="first-name"
+                                            placeholder="Adın."
+                                            onBlur={handleBlur}
+                                            value={values.first_name}
+                                            onChange={handleChange('first_name')}>
+                                        </DefaultInput>
+                                        {(errors.first_name && touched.first_name) && <AlertDanger text={errors.first_name}/> }
+                                    </div>
+                                    <div className="mb-4 ">
+                                        <DefaultLabel htmlFor="last-name">Soyad</DefaultLabel>
+                                        <DefaultInput
+                                            className={errors.last_name && touched.last_name ? "border border-red-400 placeholder-red-400" : ""}
+                                            autoComplete={"family-name"}
+                                            type="text"
+                                            name="last_name"
+                                            id="last-name"
+                                            placeholder="Soyadın."
+                                            onBlur={handleBlur}
+                                            value={values.last_name}
+                                            onChange={handleChange('last_name')}>
+                                        </DefaultInput>
+                                        {(errors.last_name && touched.last_name) && <AlertDanger text={errors.last_name}/> }
+                                    </div>
                                 </div>
                                 <div className="mb-4">
                                     <DefaultLabel htmlFor="signin-mail">E-posta</DefaultLabel>

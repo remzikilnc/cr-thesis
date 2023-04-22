@@ -14,14 +14,13 @@ export const authStore = createSlice({
     reducers: {
         saveAuthUser: (state, action) => {
             try {
-                //todo useri encode edip buraya kaydet
                 const data = action.payload;
                 const jwtEncodedData = JWTEncode(data, 'secret');
-                const encryptedAppState = crypto.AES.encrypt(jwtEncodedData, "crcrypto").toString();
+                const encryptedAppState = crypto.AES.encrypt(jwtEncodedData, "crthesisSecret").toString();
                 localStorage.setItem('authUser', encryptedAppState);
                 state.authUser = jwt_decode(jwtEncodedData)
             } catch (e) {
-                console.log(e)
+
             }
         },
         removeAuthUser: (state) => {

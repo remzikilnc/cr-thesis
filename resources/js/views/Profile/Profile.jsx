@@ -6,7 +6,6 @@ function Profile(props) {
     const [count, setCount] = useState(1);
 
     useEffect(()=>{
-        console.log('q')
     })
 
     const increment = () =>{
