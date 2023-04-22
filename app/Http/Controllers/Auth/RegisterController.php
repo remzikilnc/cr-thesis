@@ -37,7 +37,9 @@ class RegisterController extends BaseController
      */
     public function register(RegisterRequest $request): Response|JsonResponse
     {
-        $params = $request->all();
+        $params = $request->only([
+            'first_name','last_name','email','password'
+        ]);
         if ( ! $this->settings->get('require_email_confirmation')) {
             $params['email_verified_at'] = Carbon::now();
         }

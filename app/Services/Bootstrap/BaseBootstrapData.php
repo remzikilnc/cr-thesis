@@ -22,9 +22,9 @@ class BaseBootstrapData implements BootstrapData
 
     public function getEncoded(): string
     {
-        if ($this->data['user']) {
+/*        if ($this->data['user']) {
             $this->data['user'] = $this->data['user']->toArray();
-        }
+        }*/
 
         return base64_encode(json_encode($this->data));
     }

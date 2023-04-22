@@ -3,6 +3,7 @@
 use App\Events\UserCreated;
 use App\Events\UsersDeleted;
 use App\Models\User;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Hash;
@@ -62,7 +63,7 @@ class UserRepository
     public function create(array $params): User
     {
         /** @var User $user */
-        $user = $this->user->save($this->formatParams($params));
+        $user = $this->user->forceCreate($this->formatParams($params));
 
         try {
             if (!isset($params['roles']) || !$this->syncRoles($user, $params['roles'])) {

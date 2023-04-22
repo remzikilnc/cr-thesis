@@ -68,14 +68,17 @@ trait AuthenticatesUser
         return Auth::guard();
     }
 
-    protected function createToken($request){
+    protected function createToken($request)
+    {
         $user = $request->user();
         $tokenResult = $user->createToken('Personal Access');
         $token = $tokenResult->token;
 
-        /* if ($request->remember) {
-            $token->expires_at = Carbon::now()->addWeeks();
-        }*/
+        if ($request->remember) {
+            $token->expires_at = Carbon::now()->addDays(30);
+        }else{
+            $token->expires_at = Carbon::now()->addDays(2);
+        }
 
         $token->save();
         return $token;
@@ -111,7 +114,7 @@ trait AuthenticatesUser
         ]);
     }
 
-    protected function authenticated(Request $request,User $user)
+    protected function authenticated(Request $request, User $user)
     {
         //todo auth başarılıysa ve fonksiyon kullanılan class içerisinde doldurulursa && eğer json ise sadece burası dönecek
     }
@@ -131,7 +134,7 @@ trait AuthenticatesUser
             'success' => true,
             'message' => 'Successfully logged out',
             'data' => []
-        ],204);
+        ], 204);
     }
 
 
