@@ -76,12 +76,16 @@ trait AuthenticatesUser
 
         if ($request->remember) {
             $token->expires_at = Carbon::now()->addDays(30);
-        }else{
+        } else {
             $token->expires_at = Carbon::now()->addDays(2);
         }
 
         $token->save();
-        return $token;
+        return [
+            'expires_at' => Carbon::parse($token->expires_at)->toDateTimeString(),
+            'access_token' => $tokenResult->accessToken,
+            'token_type' => 'Bearer'
+            ];
     }
 
     protected function credentials(Request $request): array
@@ -105,11 +109,8 @@ trait AuthenticatesUser
             'message' => 'Successfully',
             'data' => [
                 'user' => $this->guard()->user(),
-                'token' => [
-                    'access_token' => $token,
-                    'token_type' => 'Bearer',
-                    'expires_at' => Carbon::parse($token->expires_at)->toDateTimeString(),
-                ]
+                'token' => $token
+
             ]
         ]);
     }
