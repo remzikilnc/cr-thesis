@@ -2,18 +2,30 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+Route::group(["prefix" => "v1",], function () {
+    //TEST
+    Route::get('test', [\App\Http\Controllers\TestController::class,'testPost']);
 
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "api" middleware group. Make something great!
-|
-*/
+    //Bootstrap
+    Route::get('bootstrap-data', [\App\Http\Controllers\BootstrapController::class,'getBootstrapData']);
+    // Auth
+    Route::group(["prefix" => "auth",], function () {
+        Route::post("login", [\App\Http\Controllers\Auth\RegisterController::class,'register']);
+        Route::post("test", [\App\Http\Controllers\Auth\LoginController::class,'login']);
+        Route::post("register",  [\App\Http\Controllers\Auth\LoginController::class,'logout']);
+        // FORGOT/RESET PASSWORD
+/*        Route::post('password/email', 'SendPasswordResetEmailController@sendResetLinkEmail');
+        Route::post('password/reset', 'ResetPasswordController@reset');*/
+    });
+    // Protected for authenticated users
+    Route::group([
+        "middleware" => ['auth:api'],
+    ], function () {
+        Route::post('/logout', [\App\Http\Controllers\AuthController::class, "logout"]);
+        Route::post('/authenticate', [\App\Http\Controllers\AuthController::class, "authenticate"]);
+    });
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+    Route::get('/types/{type_slug}/categories', [\App\Http\Controllers\CategoryController::class, 'showCategories']);
+    // END authenticated users
+
 });
