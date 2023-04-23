@@ -65,7 +65,7 @@ class RolesTableSeeder extends Seeder
      */
     public function run(): void
     {
-        $this->commonConfig = $this->fs->getRequire(app('path.common') . '/resources/config/permissions.php');
+        $this->commonConfig = $this->fs->getRequire(config_path('default/permissions.php'));
 
         foreach ($this->commonConfig['roles'] as $appRole) {
             $this->createOrUpdateRole($appRole);

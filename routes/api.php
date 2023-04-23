@@ -22,10 +22,10 @@ Route::group(["prefix" => "v1",], function () {
     Route::group([
         "middleware" => ['auth:api'],
     ], function () {
-        Route::post('/authenticate', [\App\Http\Controllers\AuthController::class, "authenticate"]);
+     /*   Route::post('/authenticate', [\App\Http\Controllers\AuthController::class, "authenticate"]);*/
     });
 
-    Route::get('/types/{type_slug}/categories', [\App\Http\Controllers\CategoryController::class, 'showCategories']);
+/*    Route::get('/types/{type_slug}/categories', [\App\Http\Controllers\CategoryController::class, 'showCategories']);*/
     // END authenticated users
 
 });

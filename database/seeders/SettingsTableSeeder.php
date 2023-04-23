@@ -27,7 +27,7 @@ class SettingsTableSeeder extends Seeder
      */
     public function run(): void
     {
-        $defaultSettings = config('common.default-settings');
+        $defaultSettings = config('default.default-settings');
 
         $names = [];
 
