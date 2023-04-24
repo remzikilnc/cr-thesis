@@ -25,9 +25,10 @@ class User extends Authenticatable
     use Notifiable, HasRoles, HasApiTokens;
 
     const MODEL_TYPE = 'user';
+    protected $quard_name = 'api';
 
     protected $guarded = ['id','created_at', 'updated_at', 'avatar'];
-    protected $hidden = ['password', 'remember_token'];
+    protected $hidden = ['password'];
     protected $casts = ['id' => 'integer', 'email_verified_at' => 'datetime',];
     protected $appends = ['model_type'];
 
@@ -54,14 +55,6 @@ class User extends Authenticatable
     public static function findAdmin(): ?self
     {
         //Todo
-    }
-
-    public function refreshApiToken($tokenName): string
-    {
-        $this->tokens()->where('name', $tokenName)->delete();
-        $newToken = $this->createToken($tokenName);
-        $this->withAccessToken($newToken->accessToken);
-        return $newToken->plainTextToken;
     }
 
     public function toSearchableArray(): array

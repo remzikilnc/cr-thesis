@@ -161,6 +161,7 @@ return [
          */
         \App\Providers\CommonServiceProvider::class,
         Spatie\Permission\PermissionServiceProvider::class,
+        Laravel\Sanctum\SanctumServiceProvider::class,
         /*
          * Application Service Providers...
          */

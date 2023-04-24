@@ -12,14 +12,15 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        app(RolesTableSeeder::class)->__invoke();
         app(PermissionTableSeeder::class)->__invoke();
+        app(RolesTableSeeder::class)->__invoke();
         app(SettingsTableSeeder::class)->__invoke();
+
+
+        //default admin
+        $this->call(DefaultAdminSeeder::class);
+
         // \App\Models\User::factory(10)->create();
 
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
     }
 }

@@ -59,7 +59,7 @@ trait AuthenticatesUser
     protected function attemptLogin(Request $request): bool
     {
         return $this->guard()->attempt(
-            $this->credentials($request), $request->filled('remember')
+            $this->credentials($request)
         );
     }
 
@@ -71,19 +71,10 @@ trait AuthenticatesUser
     protected function createToken($request)
     {
         $user = $request->user();
-        $tokenResult = $user->createToken('Personal Access');
-        $token = $tokenResult->token;
-
-        if ($request->remember) {
-            $token->expires_at = Carbon::now()->addDays(30);
-        } else {
-            $token->expires_at = Carbon::now()->addDays(2);
-        }
-
-        $token->save();
+        $token = $user->createToken('Personal Access')->plainTextToken;
         return [
-            'expires_at' => Carbon::parse($token->expires_at)->toDateTimeString(),
-            'access_token' => $tokenResult->accessToken,
+            'expires_at' => Carbon::now()->addMinutes(10080)->toDateTimeString(),
+            'access_token' => $token,
             'token_type' => 'Bearer'
             ];
     }
@@ -95,7 +86,10 @@ trait AuthenticatesUser
 
     protected function sendFailedLoginResponse(): JsonResponse
     {
-        return response()->json(['message' => 'Giriş yapılamadı, bilgileri kontrol edin ve tekrar deneyin'], 401);
+        return response()->json([
+            'success' => false,
+            'message' => 'Giriş yapılamadı, bilgileri kontrol edin ve tekrar deneyin'
+        ], 401);
     }
 
     protected function sendLoginResponse(Request $request, $token): JsonResponse
@@ -104,7 +98,7 @@ trait AuthenticatesUser
             return $this->authenticated($request, $request->user());
         }
 
-        $user = $this->guard()->user()->toNormalizedArray();
+        $user = $this->guard()->user();
         return response()->json([
             'success' => true,
             'message' => 'Successfully',
@@ -122,13 +116,13 @@ trait AuthenticatesUser
     }
 
 
-    public function logout(Request $request)
+    public function logout(Request $request): JsonResponse
     {
         $user = $request->user();
         if ($user){
-            $accessToken = $user->token();
+            $accessToken = $user->currentAccessToken();
             if ($accessToken) {
-                $accessToken->revoke();
+                $accessToken->delete();
             }
         }
         return response()->json([

@@ -14,13 +14,6 @@ class PermissionTableSeeder extends Seeder
     public function run(): void
     {
         $allPermissions = app(GetStaticPermissions::class)->execute();
-        $allPermissions['admin'][] = [
-            'name' => 'admin',
-            'guard_name' => 'api',
-            'display_name' => 'Super Admin',
-            'description' => 'Give all permissions to user.',
-        ];
-
         foreach ($allPermissions as $groupName => $group) {
             foreach ($group as $permission) {
                 $permission['group'] = $groupName;

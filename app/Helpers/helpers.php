@@ -1,3 +1,4 @@
+
 <?php
 
 use Cocur\Slugify\Slugify;
@@ -53,6 +54,8 @@ if (!function_exists('modelTypeToNamespace')) {
         return 'App\\' . ucfirst($modelType);
     }
 }
+
+
 
 if (!function_exists('getIp')) {
     function getIp(): string

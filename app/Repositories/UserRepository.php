@@ -175,7 +175,7 @@ class UserRepository
             }
             foreach ($roles as $roleName) {
                 try {
-                    $role = $this->role->findByName($roleName);
+                    $role = $this->role->findByName($roleName,'api');
                     $validRoles[] = $role->name;
                 } catch (RoleDoesNotExist $e) {
                     continue;
@@ -236,12 +236,13 @@ class UserRepository
         $defaultRole = $this->getDefaultRole();
 
         if ($defaultRole) {
-            $user->assignRole($defaultRole->name);
+            $user->assignRole($defaultRole);
         }
     }
 
     private function getDefaultRole()
     {
+
         return $this->role->where('default', 1)->first();
     }
 }

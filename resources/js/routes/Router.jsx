@@ -16,13 +16,12 @@ function Main () {
             </Route>
 
             {/*-----Auth-----*/}
-            <Route path="/" element={<AuthLayout />}>
+            <Route path="/" element={<AuthLayout/>}>
                 <Route index={false}></Route>
                 <Route path="login" element={<Login/>}/>
                 <Route path="register" element={<Register/>}/>
             </Route>
             {/*-----Auth END-----*/}
-
             <Route path="/profile" element={<PrivateRoute><Profile/></PrivateRoute>}/>
         </Routes>
     );

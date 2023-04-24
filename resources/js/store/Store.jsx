@@ -1,8 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit'
-import authStore from "@/store/AuthStore";
+import {tokenStore} from "@/store/Auth/AuthStore";
+import {userStore} from "@/store/Auth/UserStore";
+import authMiddleware from "@/middlewares/authMiddleware";
 
 export const store = configureStore({
     reducer: {
-        auth: authStore,
+        token: tokenStore,
+        user: userStore,
     },
+    middleware:authMiddleware,
 })

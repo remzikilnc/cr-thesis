@@ -2,31 +2,23 @@
 use App\Models\User;
 use App\Services\Settings;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Session;
 use Spatie\Permission\Models\Role;
 
 class TestController extends BaseController {
-    protected $role;
-    protected $settings;
-    protected $data;
-    protected $request;
 
 
-    public function __construct(Settings $settings,Request $request,Role $role)
+
+    public function testGet(): \Illuminate\Http\JsonResponse
     {
-        $this->role = $role;
-        $this->request = $request;
-        $this->settings = $settings;
-
-
+        return response()->json('TestGet',200);
     }
-
-    public function testPost(Request $request){
-        return Session::all();
-    }
-
-    public function getCurrentUser(): ?User
+    public function testPost(): \Illuminate\Http\JsonResponse
     {
-
+        return response()->json('TestPost',200);
     }
+    public function testPostUnAuth(Request $request): \Illuminate\Http\JsonResponse
+    {
+        return response()->json($request->all(),200);
+    }
+
 }

@@ -1,8 +1,8 @@
 import crypto from "crypto-js";
 import jwt_decode from "jwt-decode";
 
-export const getDecodedUser = () => {
-    let localAppState = localStorage.getItem('authUser')
+export const getTokenFromLocal = () => {
+    let localAppState = localStorage.getItem('token')
     if (localAppState) {
         let bytes = crypto.AES.decrypt(localAppState, 'crthesisSecret')
         try {
