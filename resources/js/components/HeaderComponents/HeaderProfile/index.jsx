@@ -8,23 +8,24 @@ import {
 } from "./styles";
 import {NavLink, useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
-import {removeAuthUser} from "@/store/AuthStore";
 import {Menu} from '@headlessui/react'
 import Avatar from "@/assets/images/marvel.jpg"
-import {attemptUserLogout} from "@/services/index";
+import {useLogoutMutation} from "@/store/api/authApiSlice";
+import {logOut, selectCurrentUser} from "@/store/auth/authSlice";
 
 function HeaderProfile() {
-    const dispatch = useDispatch();
-    const {authUser} = useSelector((state) => state.auth);
-    const user = authUser.user;
-    useEffect(() => {
-    }, [authUser]);
 
-    function logout() {
-        attemptUserLogout({ Authorization: 'Bearer ' + authUser?.token?.access_token })
-            .then(res => res)
-            .catch(e => e)
-        dispatch(removeAuthUser());
+    const user = useSelector(selectCurrentUser)
+    const dispatch = useDispatch();
+    const [logout,{isLoading}] = useLogoutMutation()
+
+    async function handleLogoutAttempt(values, actions) {
+        try {
+            const response = await logout({}).unwrap()
+            dispatch(logOut())
+        } catch(error) {
+            dispatch(logOut())
+        }
     }
 
     return (
@@ -64,7 +65,7 @@ function HeaderProfile() {
                 </Menu.Item>
                 <Menu.Item>
                     {({active}) => (
-                        <NavbarCollopseMenuButton onClick={logout} className={`${active && 'active'}`} activebgcolor={"#d0cece"}>
+                        <NavbarCollopseMenuButton onClick={handleLogoutAttempt} className={`${active && 'active'}`} activebgcolor={"#d0cece"}>
                             Oturumu Kapat
                         </NavbarCollopseMenuButton>
                     )}

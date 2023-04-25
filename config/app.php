@@ -165,6 +165,8 @@ return [
         /*
          * Application Service Providers...
          */
+        //Custom JSON Response
+        \App\Providers\ApiResponseServiceProvider::class,
         App\Providers\AppServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
         // App\Providers\BroadcastServiceProvider::class,

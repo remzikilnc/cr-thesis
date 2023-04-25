@@ -12,10 +12,9 @@ Route::group(['prefix' => 'v1', 'middleware' => 'api'], function () {
         Route::post("register", [\App\Http\Controllers\Auth\RegisterController::class,'register']);
         Route::post("login", [\App\Http\Controllers\Auth\LoginController::class,'login'])->name('login');
         Route::post("logout",  [\App\Http\Controllers\Auth\LoginController::class,'logout']);
-
-
-        //ADMİN
-
+        Route::middleware(['auth:sanctum'])->group(function () {
+            Route::get("authenticate", [\App\Http\Controllers\Auth\LoginController::class,'authenticate'])->name('authenticate');
+        });
         // FORGOT/RESET PASSWORD
 /*        Route::post('password/email', 'SendPasswordResetEmailController@sendResetLinkEmail');
         Route::post('password/reset', 'ResetPasswordController@reset');*/

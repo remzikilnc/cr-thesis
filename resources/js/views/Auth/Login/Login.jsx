@@ -13,8 +13,8 @@ import {
 } from "@/views/Auth/styles";
 import CheckboxContainer from "@/components/CustomFormComponents/CustomCheckbox";
 import AlertDanger from "@/components/CustomFormComponents/Alert/AlertDanger";
-import {saveAuthUser} from "@/store/AuthStore";
-import {attemptUserLogin} from "@/services/index";
+import {useLoginMutation} from "@/store/api/authApiSlice";
+import {setCredentials} from "@/store/auth/authSlice";
 
 
 
@@ -23,24 +23,22 @@ function Login() {
     const [error, setError] = useState('');
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const [login,{isLoading}] = useLoginMutation()
 
-    function handleSumbit(values, actions) {
-        attemptUserLogin({ ...values }).then((res) => {
-            if (res.success) {
-                dispatch(saveAuthUser({
-                    isLoggedIn: true,
-                    user: res.data.user,
-                    token: res.data.token
-                }))
-                navigate("/");
+
+
+    async function handleSumbit(values, actions) {
+        try {
+            const userData = await login({...values}).unwrap()
+            dispatch(setCredentials({...userData.data}))
+            navigate("/");
+            actions.setSubmitting(false);
+        } catch(error) {
+            if (error.data.message) {
+                setError(error.data.message);
                 actions.setSubmitting(false);
             }
-        }).catch((error) => {
-            if (error.message) {
-                setError(error.message);
-                actions.setSubmitting(false);
-            }
-        })
+        }
     }
 
     return (

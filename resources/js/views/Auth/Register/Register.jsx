@@ -11,8 +11,9 @@ import {
     DefaultButton, DefaultLabel,
 } from "@/views/Auth/styles";
 import AlertDanger from "@/components/CustomFormComponents/Alert/AlertDanger";
-import {saveAuthUser} from "@/store/AuthStore";
-import {attemptUserRegister} from "@/services/index";
+import {setCredentials} from "@/store/auth/authSlice";
+import {useRegisterMutation} from "@/store/api/authApiSlice";
+
 
 
 
@@ -22,31 +23,28 @@ function Register() {
     const [backError, setBackError] = useState('');
 
     const navigate = useNavigate();
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
 
-    function handleSumbit(values, actions) {
-        attemptUserRegister({ ...values }).then((res) => {
-            if (res.success) {
-                dispatch(saveAuthUser({
-                    isLoggedIn: true,
-                    user: res.data.user,
-                    token: res.data.token
-                }))
-                navigate("/");
-                actions.setSubmitting(false);
-            }
-        }).catch((error)=>{
-            if (error.errors){
-                let errorData = error.errors;
-                if(typeof errorData === 'object' && errorData !== null){
+    const [register,{isLoading}] = useRegisterMutation()
+
+
+    async function handleSumbit(values, actions) {
+        try {
+            const userData = await register({...values}).unwrap()
+            dispatch(setCredentials({...userData.data}))
+            navigate("/");
+            actions.setSubmitting(false);
+        } catch (error) {
+            if (error.data.errors) {
+                let errorData = error.data.errors;
+                if (typeof errorData === 'object' && errorData !== null) {
                     setBackErrors(errorData);
                 }
-            }else {
+            } else {
                 setBackError(error.message);
             }
             actions.setSubmitting(false);
-        })
-
+        }
     }
     let errs = [];
         if (Object.values(backErrors)){

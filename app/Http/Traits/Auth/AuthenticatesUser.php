@@ -47,11 +47,7 @@ trait AuthenticatesUser
         ]);
 
         if ($validator->fails()) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Validation errors',
-                'errors' => $validator->errors()
-            ], 422);
+            return response()->badRequest('Validation errors',$validator->errors());
         }
         return true;
     }
@@ -86,10 +82,7 @@ trait AuthenticatesUser
 
     protected function sendFailedLoginResponse(): JsonResponse
     {
-        return response()->json([
-            'success' => false,
-            'message' => 'Giriş yapılamadı, bilgileri kontrol edin ve tekrar deneyin'
-        ], 401);
+        return response()->badRequest('Giriş yapılamadı, bilgileri kontrol edin ve tekrar deneyin');
     }
 
     protected function sendLoginResponse(Request $request, $token): JsonResponse
@@ -99,15 +92,10 @@ trait AuthenticatesUser
         }
 
         $user = $this->guard()->user();
-        return response()->json([
-            'success' => true,
-            'message' => 'Successfully',
-            'data' => [
+        return response()->ok([
                 'user' => $user,
                 'token' => $token
-
-            ]
-        ]);
+            ]);
     }
 
     protected function authenticated(Request $request, User $user)
@@ -116,20 +104,18 @@ trait AuthenticatesUser
     }
 
 
-    public function logout(Request $request): JsonResponse
+    public function logout(Request $request)
     {
         $user = $request->user();
         if ($user){
             $accessToken = $user->currentAccessToken();
             if ($accessToken) {
                 $accessToken->delete();
+                $this->guard()->logout();
             }
         }
-        return response()->json([
-            'success' => true,
-            'message' => 'Successfully logged out',
-            'data' => []
-        ], 204);
+        $this->guard()->logout();
+        return response()->noContent();
     }
 
 

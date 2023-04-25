@@ -55,6 +55,7 @@ class RegisterController extends BaseController
         if ($user->hasVerifiedEmail()) {
             return $this->login($request);
         } else {
+            //todo The email verification process will be edited.
             $response['message'] = 'Hesabınızı nasıl etkinleştireceğinizle ilgili talimatları içeren bir e-posta gönderdik.';
             return $this->success($response);
         }

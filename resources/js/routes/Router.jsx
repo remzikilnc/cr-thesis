@@ -1,12 +1,12 @@
 import React from 'react';
 import { Route, Routes} from "react-router-dom";
-import PrivateRoute from "@/routes/PrivateRoute";
 import Register from "@/views/Auth/Register/Register";
 import Login from "@/views/Auth/Login/Login";
 import Home from "@/views/Home/Home";
 import Profile from "@/views/Profile/Profile";
 import FrontContainer from "@/containers/FrontContainer";
 import AuthLayout from "@/components/Layout/AuthLayout";
+import RequireAuth from "@/components/RequireAuth/RequireAuth";
 
 function Main () {
     return(
@@ -22,7 +22,9 @@ function Main () {
                 <Route path="register" element={<Register/>}/>
             </Route>
             {/*-----Auth END-----*/}
-            <Route path="/profile" element={<PrivateRoute><Profile/></PrivateRoute>}/>
+            <Route element={<RequireAuth/>}>
+                <Route path="/profil" element={<Profile/>}/>
+            </Route>
         </Routes>
     );
 }

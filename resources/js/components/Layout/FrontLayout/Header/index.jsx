@@ -8,23 +8,21 @@ import {useNavigate} from "react-router-dom";
 import HeaderLogo from "@/components/HeaderComponents/HeaderLogo";
 import HeaderMenuNavigation from "@/components/HeaderComponents/HeaderMenuNavigation";
 import HeaderProfile from "@/components/HeaderComponents/HeaderProfile";
-import {removeAuthUser} from "@/store/AuthStore";
 import HeaderAuthButtons from "@/components/HeaderComponents/HeaderAuthButtons";
 import Color from "@/constants/colors";
 import color from "@/constants/colors";
+import {selectCurrentUser} from "@/store/auth/authSlice";
 
 
 function FrontHeader() {
-    const dispatch = useDispatch();
     const navigate = useNavigate();
-    const {authUser} = useSelector((state) => state.auth);
-
+    const user = useSelector(selectCurrentUser)
+/*
     useEffect(() => {
         window.addEventListener('storage', function () {
-            dispatch(removeAuthUser());
             navigate('/login');
         });
-    }, []);
+    }, []);*/
 
     /*
             const handleLocalStorageChange = () => {
@@ -89,7 +87,7 @@ function FrontHeader() {
             </VerticalMenu>
             <VerticalMenu>
                 <MobileMenu>{/*styyle lazm*/}</MobileMenu>
-                {authUser?.user && <ul className={"flex flex-row items-center "}>
+                {user && <ul className={"flex flex-row items-center "}>
                     <li className={"mr-[25px] ml-[25px] items-center flex"}>
                         <button>
                             <Icon name={'notification'} fill={Color.themeLighterPassive} size={21}></Icon>
@@ -104,7 +102,7 @@ function FrontHeader() {
             </VerticalMenu>
         </NavbarVertical>
         <div className="shrink-0 flex min-w-[300px]" style={{background:color.themeDarkPrimary}}>
-            {(authUser?.user && authUser?.token) ? <HeaderProfile/> :
+            {user ? <HeaderProfile/> :
                 <nav className={"flex items-center justify-end w-full"}>
                 <HeaderAuthButtons title={'Oturum Aç'} link={'/login'} bgColor={Color.darkdrop} />
                     <HeaderAuthButtons title={'Kayıt ol'} link={'/register'} />

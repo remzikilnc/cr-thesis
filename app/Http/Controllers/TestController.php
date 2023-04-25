@@ -16,9 +16,9 @@ class TestController extends BaseController {
     {
         return response()->json('TestPost',200);
     }
-    public function testPostUnAuth(Request $request): \Illuminate\Http\JsonResponse
+    public function testPostAuth(Request $request): \Illuminate\Http\JsonResponse
     {
-        return response()->json($request->all(),200);
+        return response()->json('t',200);
     }
 
 }

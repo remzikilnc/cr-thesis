@@ -16,7 +16,7 @@ class LoginController extends BaseController
 
     public function __construct (Settings $settings)
     {
-        $this->middleware('guest', ['except' => 'logout']);
+        $this->middleware('guest', ['except' => ['logout', 'authenticate']]);
         $this->settings = $settings;
     }
 
@@ -26,6 +26,14 @@ class LoginController extends BaseController
         if ($this->settings->get('single_device_login')) {
             Auth::logoutOtherDevices($request->get('password'));
         }
+    }
+
+    protected function authenticate(Request $request): \Illuminate\Http\JsonResponse
+    {
+        if ($request->bearerToken()) {
+            return response()->ok($request->user());
+        }
+        return response()->badRequest();
     }
 
 }
