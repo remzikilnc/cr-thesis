@@ -1,7 +1,5 @@
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react';
 import {logOut} from '@/store/Auth/authSlice';
-import {useDispatch} from "react-redux";
-
 
 const baseQuery = fetchBaseQuery({
     baseUrl: import.meta.env.VITE_APP_API_URL, credentials: 'include', prepareHeaders: (headers, {getState}) => {
@@ -13,7 +11,6 @@ const baseQuery = fetchBaseQuery({
         return headers;
     },
 });
-
 
 const baseQueryWithReauth =  async (args, api, extraOptions) => {
     let result = await baseQuery(args, api, extraOptions)

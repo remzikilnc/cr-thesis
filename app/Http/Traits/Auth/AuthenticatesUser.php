@@ -91,7 +91,7 @@ trait AuthenticatesUser
             return $this->authenticated($request, $request->user());
         }
 
-        $user = $this->guard()->user();
+        $user = $this->guard()->user()->toNormalizedArray();
         return response()->ok([
                 'user' => $user,
                 'token' => $token
@@ -117,6 +117,7 @@ trait AuthenticatesUser
         $this->guard()->logout();
         return response()->noContent();
     }
+
 
 
 }

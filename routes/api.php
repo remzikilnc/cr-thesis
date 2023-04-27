@@ -6,15 +6,17 @@ Route::group(['prefix' => 'v1', 'middleware' => 'api'], function () {
     //TEST
 
     //Bootstrap
-    Route::get('bootstrap-data', [\App\Http\Controllers\BootstrapController::class,'getBootstrapData']);
     // Auth
     Route::group(["prefix" => "auth",], function () {
         Route::post("register", [\App\Http\Controllers\Auth\RegisterController::class,'register']);
         Route::post("login", [\App\Http\Controllers\Auth\LoginController::class,'login'])->name('login');
         Route::post("logout",  [\App\Http\Controllers\Auth\LoginController::class,'logout']);
+
         Route::middleware(['auth:sanctum'])->group(function () {
             Route::get("authenticate", [\App\Http\Controllers\Auth\LoginController::class,'authenticate'])->name('authenticate');
+            Route::get("roles", [\App\Http\Controllers\Auth\RolesController::class,'getCurrentUserRoles'])->name('getCurrentUserRoles');
         });
+
         // FORGOT/RESET PASSWORD
 /*        Route::post('password/email', 'SendPasswordResetEmailController@sendResetLinkEmail');
         Route::post('password/reset', 'ResetPasswordController@reset');*/

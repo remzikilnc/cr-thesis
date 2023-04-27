@@ -11,6 +11,7 @@ use Illuminate\Notifications\DatabaseNotificationCollection;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Collection;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\Permission\Models\Role;
 use Spatie\Permission\Traits\HasRoles;
 
 /*use Illuminate\Support\Collection;
@@ -91,7 +92,7 @@ class User extends Authenticatable
         $array = parent::toArray();
 
         $array['role_names'] = $this->roleNames;
-        $array['permission_names'] = $this->permissionNames;
+/*        $array['permission_names'] = $this->permissionNames;*/
 
         return $array;
     }

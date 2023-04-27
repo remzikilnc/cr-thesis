@@ -1,4 +1,4 @@
-import {createSlice} from '@reduxjs/toolkit'
+import {createAsyncThunk, createSlice} from '@reduxjs/toolkit'
 import crypto from "crypto-js";
 import JWTEncode from "jwt-encode";
 import jwt_decode from "jwt-decode";
@@ -11,7 +11,6 @@ const getTokenFromLocal = () => {
             let jwtEncodedData = bytes.toString(crypto.enc.Utf8);
             return jwt_decode(jwtEncodedData);
         } catch (error) {
-            // Eğer hata olursa, token değeri null döndürün.
             return null;
         }
     } else {
@@ -19,14 +18,11 @@ const getTokenFromLocal = () => {
     }
 };
 
-
 export const authSlice = createSlice({
-    name: 'auth',
-    initialState: {
+    name: 'auth', initialState: {
         token: getTokenFromLocal(),
         user: null,
-    } ,
-    reducers: {
+    }, reducers: {
         setCredentials: (state, action) => {
             try {
                 const data = action.payload;
@@ -46,12 +42,11 @@ export const authSlice = createSlice({
         },
         setUser: (state, action) => {
             state.user = action.payload
-        }
+        },
     },
 })
 
 export const {setCredentials, logOut, setUser} = authSlice.actions
-
 export default authSlice.reducer
 
 export const selectCurrentUser = (state) => state.auth.user

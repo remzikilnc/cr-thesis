@@ -31,9 +31,8 @@ class LoginController extends BaseController
     protected function authenticate(Request $request): \Illuminate\Http\JsonResponse
     {
         if ($request->bearerToken()) {
-            return response()->ok($request->user());
+            return response()->ok($this->guard()->user()->toNormalizedArray());
         }
         return response()->badRequest();
     }
-
 }

@@ -24,11 +24,17 @@ export const authApiSlice = apiSlice.injectEndpoints({
             })
         }),
         authenticate: builder.query({
-            query: token =>({
+            query: () =>({
                 url: '/auth/authenticate',
+                method: 'GET',
+            })
+        }),
+        currentUserRoles: builder.query({
+            query: () =>({
+                url: '/auth/roles',
                 method: 'GET',
             })
         }),
     })
 })
-export const {useLoginMutation, useRegisterMutation, useLogoutMutation, useAuthenticateQuery} = authApiSlice
+export const {useLoginMutation, useRegisterMutation, useLogoutMutation, useAuthenticateQuery, useCurrentUserRolesQuery} = authApiSlice
