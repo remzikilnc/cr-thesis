@@ -24,7 +24,7 @@ class BaseController extends Controller
      * @param  mixed  $ability
      * @return bool
      */
-    public function canDo($ability): bool
+    public function auth($ability): bool
     {
         if (Auth::check()) {
             $user = User::find(Auth::id());

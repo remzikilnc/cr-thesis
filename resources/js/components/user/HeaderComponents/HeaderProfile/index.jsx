@@ -9,7 +9,7 @@ import {
 import {NavLink, useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {Menu} from '@headlessui/react'
-import Avatar from "@/assets/images/marvel.jpg"
+import Avatar from "@/assets/avatars/images/avatar.png"
 import {useLogoutMutation} from "@/store/api/authApiSlice";
 import {logOut, selectCurrentUser} from "@/store/auth/authSlice";
 

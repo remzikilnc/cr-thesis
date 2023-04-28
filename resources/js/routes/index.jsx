@@ -7,13 +7,14 @@ import {useAuthenticateQuery} from "@/store/api/authApiSlice";
 
 import FrontContainer from "@/containers/FrontContainer";
 import Home from "@/views/Home/Home";
-import AuthLayout from "@/components/user/Layout/AuthLayout";
 import Login from "@/views/auth/login";
 import Register from "@/views/auth/register";
 import RequireAuth from "@/routes/protected/user";
 import Profile from "@/views/user/profile";
 import RequireAdmin from "@/routes/protected/admin";
-import Admin from "@/views/admin/dashboard";
+import AuthLayout from "@/layouts/auth";
+import AdminLayout from "@/layouts/admin";
+
 
 
 function MainRoutes() {
@@ -52,7 +53,7 @@ function MainRoutes() {
 
         {/*-----NEEDED ADMIN ROLE-----*/}
         <Route element={<RequireAdmin/>}>
-            <Route path="/admin" element={<Admin/>}/>
+            <Route path="admin/*" element={<AdminLayout />} />
         </Route>
         {/*-----NEEDED ADMIN ROLE END-----*/}
 
