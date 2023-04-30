@@ -1,7 +1,7 @@
 <?php namespace App\Rules;
 
-use App\Services\Settings;
 use App\Models\User;
+use App\Services\Settings;
 use Illuminate\Support\Facades\App;
 
 class EmailVerifiedValidator {

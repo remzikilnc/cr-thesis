@@ -2,7 +2,6 @@
 
 namespace App\Http\Traits\Auth;
 
-use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Auth\StatefulGuard;
@@ -91,14 +90,22 @@ trait AuthenticatesUser
             return $this->authenticated($request, $request->user());
         }
 
-        $user = $this->guard()->user()->toNormalizedArray();
+        $user = $this->guard()->user()->withRoleNamesAttribute();
         return response()->ok([
                 'user' => $user,
                 'token' => $token
             ]);
     }
 
-    protected function authenticated(Request $request, User $user)
+    /**
+     * The user has been authenticated.
+     *
+     * @param Request $request
+     * @param  mixed  $user
+     * @return mixed
+     */
+
+    protected function authenticated(Request $request, $user)
     {
         //todo auth başarılıysa ve fonksiyon kullanılan class içerisinde doldurulursa && eğer json ise sadece burası dönecek
     }

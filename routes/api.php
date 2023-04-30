@@ -17,7 +17,7 @@ Route::group(['prefix' => 'v1', 'middleware' => 'api'], function () {
         });
     });
 
-    Route::middleware(['api', 'optional_auth_sanctum'])->group(function () {
-        Route::post("users/{user}", [\App\Http\Controllers\UserController::class,'index']);
+    Route::middleware(['optional_auth_sanctum'])->group(function () {
+        Route::apiResource("users", \App\Http\Controllers\UserController::class);
     });
 });

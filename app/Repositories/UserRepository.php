@@ -1,9 +1,8 @@
 <?php namespace App\Repositories;
 
+use App\Models\User;
 use App\Events\UserCreated;
 use App\Events\UsersDeleted;
-use App\Models\User;
-use Carbon\Carbon;
 use Exception;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Hash;
@@ -243,6 +242,6 @@ class UserRepository
     private function getDefaultRole()
     {
 
-        return $this->role->where('default', 1)->first();
+        return $this->role->where('default', 1)->where('guard_name','api')->first();
     }
 }
