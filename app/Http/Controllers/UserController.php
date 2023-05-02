@@ -32,7 +32,16 @@ class UserController extends BaseController
     {
         $this->authorize('index', User::class);
 
-        return response()->ok('indexMethod');
+        // params:
+        // role_name,
+        // permission,
+        // (orderBy) last_name // first-name // created_at -> asc, desc
+        // query
+
+        $pagination = app(PaginateUsers::class)->execute($this->request->all());
+
+
+        return response()->ok($pagination);
 
     }
 

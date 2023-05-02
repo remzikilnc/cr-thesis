@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Engines\MysqlSearchEngine;
 use Illuminate\Support\ServiceProvider;
+use Laravel\Scout\EngineManager;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -21,6 +23,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        resolve(EngineManager::class)->extend('mysql', function () {
+            return new MysqlSearchEngine();
+        });
     }
 }

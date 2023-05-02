@@ -23,7 +23,7 @@ function Login() {
         try {
             const userData = await login({...values}).unwrap()
             dispatch(setCredentials({...userData.data}))
-            navigate("/");
+            userData.data.user.role_names.includes('admin') ? navigate('/admin') : navigate('/');
             actions.setSubmitting(false);
         } catch (error) {
             if (error.data.message) {
