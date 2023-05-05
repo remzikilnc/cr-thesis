@@ -2,8 +2,8 @@
 
 namespace App\Exceptions;
 
-use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Validation\UnauthorizedException;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Throwable;
@@ -26,11 +26,32 @@ class Handler extends ExceptionHandler
      */
     public function register(): void
     {
-        $apiExceptionHandler = app(ApiExceptionHandler::class);
+        $this->renderable(function (\Spatie\Permission\Exceptions\UnauthorizedException $e, $request) {
+            return response()->json([
+                'success' => false,
+                'message' => 'You do not have the required permissions.',
+            ], 403);
+        });
 
-        $this->renderable(function (Throwable $e, $request) use ($apiExceptionHandler) {
-            $response = $apiExceptionHandler->handle($e, $request);
-            return $response ?? parent::render($request, $e);
+        $this->renderable(function (\Illuminate\Auth\AuthenticationException $e, $request){
+            return response()->json([
+                'success' => false,
+                'message' => 'Access Denied.',
+            ], 401);
+        });
+
+        $this->renderable(function (AccessDeniedHttpException $e, $request) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Access Denied.',
+            ], 403);
+        });
+
+        $this->renderable(function (\Illuminate\Auth\Access\AuthorizationException $e, $request) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Access Denied.',
+            ], 403);
         });
     }
 }

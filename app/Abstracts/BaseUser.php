@@ -30,12 +30,6 @@ abstract class BaseUser extends Authenticatable
     protected $casts = ['id' => 'integer', 'email_verified_at' => 'datetime',];
     protected $appends = ['model_type'];
 
-
-    public function __construct(array $attributes = [])
-    {
-        parent::__construct($attributes);
-    }
-
     public function getRoleNamesAttribute(): Collection
     {
         return $this->roles->pluck('name');
@@ -83,11 +77,11 @@ abstract class BaseUser extends Authenticatable
     public function toNormalizedArray(): array
     {
         return [
-            'id' => $this->id,
-            'name' => $this->display_name,
-            'description' => $this->email,
+            'first_name' => $this->first_name,
+            'last_name' => $this->last_name,
             'image' => $this->avatar,
             'model_type' => self::MODEL_TYPE,
+            'role_names' => $this->roleNames,
         ];
     }
 

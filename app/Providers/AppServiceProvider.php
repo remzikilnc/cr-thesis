@@ -23,8 +23,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        resolve(EngineManager::class)->extend('mysql', function () {
-            return new MysqlSearchEngine();
-        });
+
     }
 }

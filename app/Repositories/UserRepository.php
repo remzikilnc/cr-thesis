@@ -110,16 +110,12 @@ class UserRepository
         $users = $this->user->whereIn('id', $ids)->get();
 
         $users->each(function (User $user) {
-            $user->social_profiles()->delete();
             $user->roles()->detach();
-            $user->notifications()->delete();
             $user->permissions()->detach();
-            //todo comment review
+            $user->tokens()->delete();
             $user->delete();
+            //todo comment review
 
-/*        todo remove files which created by deleted user
-            $entryIds = $user->entries(['owner' => true])->pluck('file_entries.id');
-            app(PermanentlyDeleteEntries::class)->execute($entryIds);*/
         });
 
         event(new UsersDeleted($users));
@@ -174,7 +170,7 @@ class UserRepository
             }
             foreach ($roles as $roleName) {
                 try {
-                    $role = $this->role->findByName($roleName,'api');
+                    $role = $this->role->findByName($roleName, 'api');
                     $validRoles[] = $role->name;
                 } catch (RoleDoesNotExist $e) {
                     continue;
@@ -184,7 +180,7 @@ class UserRepository
 
         if (empty($validRoles)) {
             return false;
-        }else return $user->syncRoles($validRoles);
+        } else return $user->syncRoles($validRoles);
     }
 
     /**
@@ -242,6 +238,6 @@ class UserRepository
     private function getDefaultRole()
     {
 
-        return $this->role->where('default', 1)->where('guard_name','api')->first();
+        return $this->role->where('default', 1)->where('guard_name', 'api')->first();
     }
 }

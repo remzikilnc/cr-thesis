@@ -3,7 +3,7 @@ import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import MainLogo from '@/assets/logos/logo.svg';
 import { InputAdornment } from '@mui/material';
-import {SearchField, VerticalSearch} from '@/components/CustomSearch/styles';
+import {SearchField, VerticalSearch} from './styles';
 import { Icon } from '@/assets/icons/Icons';
 import { styled } from '@mui/system';
 import CloseIcon from '@mui/icons-material/Close';

@@ -5,6 +5,7 @@ import MainDashboard from "@/views/admin/default";
 import NFTMarketplace from "@/views/admin/marketplace";
 import Profile from "@/views/admin/profile";
 import DataTables from "@/views/admin/tables";
+import UsersList from "@/views/admin/users";
 
 // Icon Imports
 import {
@@ -37,6 +38,13 @@ const adminRoutes = [
         icon: <MdBarChart className="h-6 w-6" />,
         path: "data-tables",
         component: <DataTables />,
+    },
+    {
+        name: "Users",
+        layout: "/admin",
+        icon: <MdBarChart className="h-6 w-6" />,
+        path: "users",
+        component: <UsersList />,
     },
     {
         name: "Profile",

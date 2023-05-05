@@ -35,4 +35,18 @@ class LoginController extends BaseController
         }
         return response()->badRequest();
     }
+
+    public function logout(Request $request)
+    {
+        $user = $request->user();
+        if ($user){
+            $accessToken = $user->currentAccessToken();
+            if ($accessToken) {
+                $accessToken->delete();
+                $this->guard()->logout();
+            }
+        }
+        $this->guard()->logout();
+        return response()->noContent();
+    }
 }

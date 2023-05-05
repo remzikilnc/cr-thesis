@@ -31,7 +31,7 @@ class ApiResponseServiceProvider extends ServiceProvider
     {
         $instance = $this;
         Response::macro('ok', function ($data = []) {
-            return Response::json(['success'=> true, 'data' => $data], 200);
+            return Response::json(['success' => true, 'data' => $data], 200);
         });
 
         Response::macro('created', function ($data = []) {
@@ -55,7 +55,10 @@ class ApiResponseServiceProvider extends ServiceProvider
 
         Response::macro('forbidden', function ($message = 'Access denied', $errors = []) use ($instance) {
             return $instance->handleErrorResponse($message, $errors, 403);
+        });
 
+        Response::macro('error', function ($message = 'Error.', $errors = []) use ($instance) {
+            return $instance->handleErrorResponse($message, $errors, 422);
         });
 
         Response::macro('notFound', function ($message = 'Resource not found.', $errors = []) use ($instance) {
