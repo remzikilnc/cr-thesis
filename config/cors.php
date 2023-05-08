@@ -19,7 +19,7 @@ return [
 
     'allowed_methods' => ['GET', 'POST','HEAD', 'PUT', 'PATCH', 'DELETE'],
 
-    'allowed_origins' => ['http://example.com', 'https://example.com'],
+    'allowed_origins' => ['localhost'],
 
     'allowed_origins_patterns' => [],
 

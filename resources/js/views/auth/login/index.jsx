@@ -3,7 +3,7 @@ import {NavLink, useNavigate} from "react-router-dom";
 import {useDispatch} from "react-redux";
 import {Formik} from "formik";
 import * as Yup from "yup";
-import {useLoginMutation} from "@/store/api/authApiSlice";
+import {useLoginMutation} from "@/store/api/auth/authApiSlice";
 import {setCredentials} from "@/store/auth/authSlice";
 import {
     Card, Body, LeadFont, DefaultInput, DefaultButton, Link, DefaultLabel

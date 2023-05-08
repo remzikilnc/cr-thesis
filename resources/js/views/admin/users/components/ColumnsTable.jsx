@@ -1,4 +1,3 @@
-import CardMenu from "@/components/admin/card/CardMenu";
 import Card from "@/components/admin/card";
 import React, { useMemo } from "react";
 import {
@@ -7,7 +6,6 @@ import {
   useSortBy,
   useTable,
 } from "react-table";
-import {FiSearch} from "react-icons/fi";
 import InlineSearchBar from "@/components/admin/search";
 import {MdClose, MdModeEditOutline} from "react-icons/md";
 import SingleCardWithIcon from "@/components/admin/card/SingleCard";
@@ -42,8 +40,9 @@ const ColumnsTable = (props) => {
         props.handleDelete(row.original.id);
     }
 
+
     function handleEdit(row) {
-        props.handleEdit(row.original.id);
+        props.getUserForModal(row.original);
     }
 
     return (
@@ -53,9 +52,8 @@ const ColumnsTable = (props) => {
 {/*        <CardMenu />*/}
           <SingleCardWithIcon handleClick={props.refetchUsers}/>
       </header>
-
       <div className="mt-8 overflow-x-scroll xl:overflow-x-hidden">
-        <table {...getTableProps()} className="w-full">
+          <table {...getTableProps()} className="w-full">
           <thead>
             {headerGroups.map((headerGroup, index) => (
               <tr {...headerGroup.getHeaderGroupProps()} key={index}>
@@ -118,19 +116,14 @@ const ColumnsTable = (props) => {
                                 {date.toLocaleString(undefined, { timeZone: 'UTC' })}
                             </p>
                         );
-                    }else if (cell.column.Header === "EDIT") {
+                    }else if (cell.column.Header === "MODIFY") {
                         return (
-                            <td {...cell.getCellProps()}  key={`edit-${index}`}>
+                            <td {...cell.getCellProps()} className={"flex mt-3"}  key={`MODIFY-${index}`}>
                                 <button
                                     className={"mr-4 flex items-center justify-center text-gray-600 dark:text-white"}
                                     onClick={() => handleEdit(row)}>
                                     <MdModeEditOutline size={"18"} className={"text-blue-400"}/>
                                 </button>
-                            </td>
-                        );
-                    }else if (cell.column.Header === "DELETE") {
-                        return (
-                            <td {...cell.getCellProps()}  key={`edit-${index}`}>
                                 <button
                                     className={"mr-4 flex items-center justify-center text-gray-600 dark:text-white"}
                                     onClick={() => handleDelete(row)}>

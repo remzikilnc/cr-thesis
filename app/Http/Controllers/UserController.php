@@ -91,10 +91,6 @@ class UserController extends BaseController
             return response()->notFound();
         }
 
-
-
-
-
         //Todo Currently, a single user can be deleted, configure it to be multiple.
 
 /*        $this->userRepository->deleteMultiple($user->pluck('id'));*/

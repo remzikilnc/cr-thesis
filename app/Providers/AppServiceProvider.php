@@ -2,9 +2,10 @@
 
 namespace App\Providers;
 
-use App\Engines\MysqlSearchEngine;
+use App\Services\Bootstrap\BaseBootstrapData;
+use App\Services\Bootstrap\BootstrapData;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\ServiceProvider;
-use Laravel\Scout\EngineManager;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -15,7 +16,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        parent::register();
+        // bootstrap data
+        $this->app->bind(BootstrapData::class, BaseBootstrapData::class);
     }
 
     /**
@@ -23,6 +26,14 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        $this->registerCustomValidators();
+    }
 
+    private function registerCustomValidators()
+    {
+        Validator::extend(
+            'email_verified',
+            'App\Rules\EmailVerifiedValidator@validate',
+        );
     }
 }

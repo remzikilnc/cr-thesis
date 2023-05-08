@@ -4,7 +4,7 @@ import * as Yup from "yup";
 import {NavLink, useNavigate} from "react-router-dom";
 import {useDispatch} from 'react-redux'
 import {setCredentials} from "@/store/auth/authSlice";
-import {useRegisterMutation} from "@/store/api/authApiSlice";
+import {useRegisterMutation} from "@/store/api/auth/authApiSlice";
 import {
     Card, Body, LeadFont, DefaultInput, DefaultButton, DefaultLabel,
 } from "@/views/Auth/styles";
@@ -58,8 +58,8 @@ function Register() {
                     }}
                     onSubmit={handleSumbit}
                     validationSchema={Yup.object().shape({
-                        first_name: Yup.string().required('Geçerli bir ad girmen gerekiyor.').min(4, 'Adın en az 4 karakterden oluşmalı').trim(),
-                        last_name: Yup.string().required('Geçerli bir soyad girmen gerekiyor.').min(4, 'Soyadın en az 4 karakterden oluşmalı').trim(),
+                        first_name: Yup.string().required('Geçerli bir ad girmen gerekiyor.').min(2, 'Adın en az 2 karakterden oluşmalı').trim(),
+                        last_name: Yup.string().required('Geçerli bir soyad girmen gerekiyor.').min(3, 'Soyadın en az 3 karakterden oluşmalı').trim(),
                         email: Yup.string().email('Geçerli bir e-posta adresi girmen gerekiyor.').required('E-posta adresini girmen gerekiyor.').min(6, 'E-posta adresini girmen gerekiyor').max(128, 'E-posta en fazla 128 karakter olabilir').trim(),
                         password: Yup.string().required('Bir parola girmen gerekiyor.').min(6, 'Parola en az 6 karakterden oluşmalı.').max(32, 'Parola en fazla 64 karakter olabilir'),
                         password_confirmation: Yup.string().oneOf([Yup.ref('password'), null], 'Parolanı onaylaman gerekiyor.')

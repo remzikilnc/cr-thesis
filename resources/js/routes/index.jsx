@@ -3,7 +3,7 @@ import {Route, Routes} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 
 import {selectCurrentUserToken, setUser} from "@/store/auth/authSlice";
-import {useAuthenticateQuery} from "@/store/api/authApiSlice";
+import {useAuthenticateQuery} from "@/store/api/auth/authApiSlice";
 
 import FrontContainer from "@/containers/FrontContainer";
 import Home from "@/views/Home/Home";

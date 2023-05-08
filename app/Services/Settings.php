@@ -80,20 +80,6 @@ class Settings {
     }
 
     /**
-     * Get random setting value from fields that
-     * have multiple values separated by newline.
-     *
-     * @param string $key
-     * @param string|null $default
-     * @return mixed
-     */
-    public function getRandom($key, $default = null) {
-        $key = $this->get($key, $default);
-        $parts = explode("\n", $key);
-        return $parts[array_rand($parts)];
-    }
-
-    /**
      * Check is setting with specified key exists.
      *
      * @param string $key

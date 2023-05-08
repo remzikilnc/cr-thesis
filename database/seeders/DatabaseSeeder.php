@@ -3,7 +3,10 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Database\Factories\UserFactory;
 use Illuminate\Database\Seeder;
+use App\Models\Role;
+
 
 class DatabaseSeeder extends Seeder
 {
@@ -20,7 +23,10 @@ class DatabaseSeeder extends Seeder
         //default admin
         $this->call(DefaultAdminSeeder::class);
 
-        // \App\Models\User::factory(10)->create();
+        //FakeUsers
+        UserFactory::new()->count(25)->create()->each(function ($fakeUser){
+            $fakeUser->assignRole(Role::where('default',true)->first());
+        });
 
     }
 }

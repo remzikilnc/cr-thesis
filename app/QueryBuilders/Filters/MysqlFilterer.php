@@ -1,6 +1,5 @@
 <?php namespace App\QueryBuilders\Filters;
 
-
 use App\QueryBuilders\Traits\SupportsMysqlFilters;
 use Laravel\Scout\Builder;
 

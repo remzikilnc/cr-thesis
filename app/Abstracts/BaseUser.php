@@ -11,12 +11,6 @@ use Illuminate\Support\Collection;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 
-/*use Illuminate\Support\Collection;
-use App\ListModel;
-use App\Review;
-use Common\Comments\Comment;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasOne;*/
 
 abstract class BaseUser extends Authenticatable
 {
@@ -24,7 +18,7 @@ abstract class BaseUser extends Authenticatable
 
     const MODEL_TYPE = 'user';
 
-    protected $quard_name = 'api';
+    protected $quard_name = 'api'; //for spatie
     protected $guarded = ['id','created_at', 'updated_at', 'avatar'];
     protected $hidden = ['password'];
     protected $casts = ['id' => 'integer', 'email_verified_at' => 'datetime',];

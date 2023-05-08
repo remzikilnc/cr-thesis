@@ -1,7 +1,5 @@
 <?php namespace App\QueryBuilders\Filters;
 
-
-
 use App\QueryBuilders\CustomQueryBuilderFilters;
 use Illuminate\Database\Eloquent\Builder;
 use Laravel\Scout\Builder as ScoutBuilder;

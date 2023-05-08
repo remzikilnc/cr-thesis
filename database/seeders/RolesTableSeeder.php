@@ -70,8 +70,6 @@ class RolesTableSeeder extends Seeder
         foreach ($this->commonConfig['roles'] as $appRole) {
             $this->createOrUpdateRole($appRole);
         }
-
-        $this->attachUsersRoleToExistingUsers();
     }
 
 
@@ -107,20 +105,4 @@ class RolesTableSeeder extends Seeder
         return $role;
     }
 
-    /**
-     * Attach default user's role to all existing users.
-     */
-    private function attachUsersRoleToExistingUsers()
-    {
-        $role = $this->role->where('default', true)->first();
-
-        $this->user->with('roles')->whereDoesntHave('roles', function(Builder $query) use($role) {
-            return $query->where('roles.id', $role->id);
-        })->select('id')->chunk(500, function(Collection $users) use($role) {
-            $insert = $users->map(function(User $user) use($role) {
-                return ['user_id' => $user->id, 'role_id' => $role->id, 'created_at' => Carbon::now()];
-            })->toArray();
-            DB::table('user_role')->insert($insert);
-        });
-    }
 }

@@ -1,7 +1,9 @@
 import ColumnsTable from "./components/ColumnsTable";
 import React, {memo, useCallback, useEffect, useState} from "react";
-import {useAllUsersQuery, useDeleteUserMutation} from "@/store/api/users/usersApiSlice";
+import {useAllUsersQuery, useDeleteUserMutation, useUpdateUserMutation} from "@/store/api/users/usersApiSlice";
 import LayoutAlert from "@/components/admin/alert";
+import {useDisclosure} from "@chakra-ui/hooks";
+import UserModal from "@/views/admin/users/components/modify";
 
 const usersDataColumns = [{
     Header: "NAME", accessor: "first_name",
@@ -14,9 +16,7 @@ const usersDataColumns = [{
 }, {
     Header: "CREATED-DATE", accessor: "created_at",
 }, {
-    Header: "EDIT",
-}, {
-    Header: "DELETE",
+    Header: "MODIFY",
 }];
 
 const loadingColumns = [{
@@ -28,7 +28,15 @@ const UsersList = () => {
     const [searchTerm, setSearchTerm] = useState("");
     const [alertMessage, setAlertMessage] = useState(null);
     const [deleteUser, {isDeleteLoading}] = useDeleteUserMutation();
-    const {data: userDatas, isLoading, refetch} = useAllUsersQuery(searchTerm ?? searchTerm)
+    const {data: userDatas, refetch} = useAllUsersQuery(searchTerm ?? searchTerm)
+    const [updateUser, {isLoading}] = useUpdateUserMutation()
+    const [selectedRow, setSelectedRow] = useState(null);
+
+    const {isOpen, onOpen, onClose} = useDisclosure();
+    function setUserDataToModal(row) {
+        setSelectedRow(row)
+        onOpen();
+    }
 
     useEffect(() => {
         if (alertMessage) {
@@ -55,10 +63,17 @@ const UsersList = () => {
         }
     }
 
-    function handleEdit(UserID) {
-        if (UserID) {
-            console.log(UserID)
-        }
+
+    async function handleModifyFormSubmit(...values) {
+            try {
+                 await updateUser(...values).unwrap()
+                //todo deleteResponse
+                setAlertMessage({type: 'success', head: 'Success', message: 'Successfully.'});
+            } catch (error) {
+                if (error.data.message) {
+                    setAlertMessage({type: 'error', head: 'Error!', message: error.data.message});
+                }
+            }
     }
 
     const refetchUsers = useCallback(() => {
@@ -72,23 +87,35 @@ const UsersList = () => {
         }
     }, [userDatas]);
 
-    return (<div>
-        {alertMessage && (<LayoutAlert
-            type={alertMessage.type}
-            head={alertMessage.head}
-            desc={alertMessage.message}
-        />)}
-        <div className="mt-5 grid h-full grid-cols-1 gap-5 ">
-            <ColumnsTable
-                columnsData={usersDataColumns}
-                tableData={fetchedUsers ? fetchedUsers : loadingColumns}
-                onInputChange={(newValue) => setSearchTerm(newValue)}
-                handleDelete={handleDelete}
-                handleEdit={handleEdit}
-                refetchUsers={refetchUsers}
+    return (
+        <div>
+
+            {alertMessage && (<LayoutAlert
+                type={alertMessage.type}
+                head={alertMessage.head}
+                desc={alertMessage.message}
+            />)}
+
+            <UserModal isOpen={isOpen}
+                          onClose={onClose}
+                          title={'Update User Details'}
+                          data={selectedRow}
+                          handleModifyForm={handleModifyFormSubmit}
+
             />
+
+            <div className="mt-5 grid h-full grid-cols-1 gap-5 ">
+                <ColumnsTable
+                    columnsData={usersDataColumns}
+                    tableData={fetchedUsers ? fetchedUsers : loadingColumns}
+                    onInputChange={(newValue) => setSearchTerm(newValue)}
+                    handleDelete={handleDelete}
+                    getUserForModal={setUserDataToModal}
+                    refetchUsers={refetchUsers}
+                />
+            </div>
         </div>
-    </div>);
+    );
 };
 
 export default memo(UsersList);

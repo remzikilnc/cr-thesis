@@ -13,7 +13,7 @@ import {
 import ExampleAvatar from "@/assets/images/avatars/avatar.png";
 import {useDispatch, useSelector} from "react-redux";
 import {logOut, selectCurrentUser} from "@/store/auth/authSlice";
-import {useLogoutMutation} from "@/store/api/authApiSlice";
+import {useLogoutMutation} from "@/store/api/auth/authApiSlice";
 
 const Navbar = (props) => {
   const dispatch = useDispatch()
@@ -34,7 +34,7 @@ const Navbar = (props) => {
 
 
     return (
-    <nav className="sticky top-4 z-40 flex flex-row flex-wrap items-center justify-between rounded-xl bg-white/10 p-2 backdrop-blur-xl dark:bg-[#0b14374d]">
+    <nav className="sticky top-4 z-10 flex flex-row flex-wrap items-center justify-between rounded-xl bg-white/10 p-2 backdrop-blur-xl dark:bg-[#0b14374d]">
       <div className="ml-[6px]">
         <div className="h-6 w-[224px] pt-1">
           <a

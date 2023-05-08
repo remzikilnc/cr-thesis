@@ -109,7 +109,7 @@ return [
     |
     */
 
-    'faker_locale' => 'en_US',
+    'faker_locale' => 'tr_TR',
 
     /*
     |--------------------------------------------------------------------------
@@ -159,7 +159,6 @@ return [
         /*
          * Package Service Providers...
          */
-        \App\Providers\CommonServiceProvider::class,
         Spatie\Permission\PermissionServiceProvider::class,
         Laravel\Sanctum\SanctumServiceProvider::class,
         /*
@@ -167,6 +166,7 @@ return [
          */
         //Custom JSON Response
         \App\Providers\ApiResponseServiceProvider::class,
+
         App\Providers\AppServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
         // App\Providers\BroadcastServiceProvider::class,

@@ -10,7 +10,7 @@ import {NavLink, useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {Menu} from '@headlessui/react'
 import Avatar from "@/assets/avatars/images/avatar.png"
-import {useLogoutMutation} from "@/store/api/authApiSlice";
+import {useLogoutMutation} from "@/store/api/auth/authApiSlice";
 import {logOut, selectCurrentUser} from "@/store/auth/authSlice";
 
 function HeaderProfile() {

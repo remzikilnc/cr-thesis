@@ -4,6 +4,9 @@ use App\Models\User;
 use App\Events\UserCreated;
 use App\Events\UsersDeleted;
 use Exception;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Exceptions\RoleDoesNotExist;
@@ -30,9 +33,9 @@ class UserRepository
      *
      * @param integer $id
      * @param array $lazyLoad
-     * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model
+     * @return Builder|Builder[]|Collection|Model
      */
-    public function findOrFail($id, $lazyLoad = [])
+    public function findOrFail($id, array $lazyLoad = [])
     {
         return $this->user->with($lazyLoad)->findOrFail($id);
     }
@@ -43,7 +46,7 @@ class UserRepository
      * @param array $params
      * @return User
      */
-    public function firstOrCreate($params)
+    public function firstOrCreate($params): User
     {
         $user = $this->user->where('email', $params['email'])->first();
 
@@ -85,7 +88,7 @@ class UserRepository
      *
      * @return User
      */
-    public function update(User $user, $params)
+    public function update(User $user, $params): User
     {
         $user->forceFill($this->formatParams($params, 'update'))->save();
         // todo
@@ -104,8 +107,9 @@ class UserRepository
     /**
      * @param \Illuminate\Support\Collection $ids
      * @return integer
+     * //todo
      */
-    public function deleteMultiple($ids)
+    public function deleteMultiple($ids): int
     {
         $users = $this->user->whereIn('id', $ids)->get();
 

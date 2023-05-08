@@ -53,7 +53,7 @@ function LayoutAlert({type, head, desc}) {
                     {getIconPath(type)}
                 </div>
                 <div>
-                    <p className="font-bold">{head}</p>
+                    {head && <p className="font-bold">{head}</p>}
                     <p className="text-sm">{desc}</p>
                 </div>
             </div>
