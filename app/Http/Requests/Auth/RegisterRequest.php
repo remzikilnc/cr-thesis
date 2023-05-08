@@ -26,9 +26,10 @@ class RegisterRequest extends FormRequest
      */
     public function rules()
     {
+        $lettersAndSpace = '/^[\pL\s]+$/u';
         return [
-            'first_name' => 'required|string|max:128|min:4',
-            'last_name' => 'required|string|max:128|min:4',
+            'first_name' => 'required|string|max:128|min:2',
+            'last_name' => 'required|string|max:128|min:3',
             'email' => 'required|unique:users|max:128|email:rfc',
             'password' => 'required|confirmed|max:64|string|min:6',
             'remember' => 'boolean'
@@ -39,15 +40,15 @@ class RegisterRequest extends FormRequest
     {
         return [
             'first_name.required' => 'Ad alanı boş bırakılamaz.',
-            'first_name.min' => 'Ad alanı en az 4 karakter olmalıdır..',
+            'first_name.min' => 'Ad alanı en az 2 karakter olmalıdır..',
             'first_name.max' => 'Ad alanı en fazla 128 karakter olmalıdır..',
             'last_name.required' => 'Soyad alanı alanı boş bırakılamaz.',
-            'last_name.min' => 'Soyad alanı en az 4 karakter olmalıdır..',
+            'last_name.min' => 'Soyad alanı en az 3 karakter olmalıdır..',
             'last_name.max' => 'Soyad alanı alanı en fazla 128 karakter olmalıdır..',
-            'email.required' => 'Email alanı boş bırakılamaz.',
-            'email.unique' => 'Bu email zaten kullanımda.',
-            'email.max' => 'Email en fazla 128 karakter olabilir.',
-            'email.email' => 'Lütfen geçerli bir email adresi giriniz.',
+            'email.required' => 'E-posta alanı boş bırakılamaz.',
+            'email.unique' => 'Bu e-posta adresi zaten kullanımda.',
+            'email.max' => 'E-posta en fazla 128 karakter olabilir.',
+            'email.email' => 'Lütfen geçerli bir E-posta adresi giriniz.',
             'password.required' => 'Parola alanı boş bırakılamaz.',
             'password.confirmed' => 'Girdiğiniz parolalar birbirleriyle eşleşmiyor.',
             'password.max' => 'Parola en fazla 64 karakter olabilir.',

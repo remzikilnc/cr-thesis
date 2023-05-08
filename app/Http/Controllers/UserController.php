@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Actions\PaginateUsers;
 use App\Events\UsersDeleted;
+use App\Http\Requests\ModifyUsersRequest;
 use App\Models\User;
 use App\Repositories\UserRepository;
 use App\Services\Settings;
@@ -41,8 +42,6 @@ class UserController extends BaseController
         // query
 
         $pagination = app(PaginateUsers::class)->execute($this->request->all());
-
-
         return response()->ok($pagination);
 
     }
@@ -95,5 +94,14 @@ class UserController extends BaseController
 
 /*        $this->userRepository->deleteMultiple($user->pluck('id'));*/
 
+    }
+
+    public function update(User $user, ModifyUsersRequest $request)
+    {
+        $this->authorize('update', $user);
+
+        $user = $this->userRepository->update($user, $request->all());
+
+        return response()->ok(['user' => $user]);
     }
 }

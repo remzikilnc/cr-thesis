@@ -19,12 +19,12 @@ function ModalInput(props) {
                 first_name: data?.first_name ?? '',
                 last_name: data?.last_name ?? '',
                 email: data?.email ?? '',
-                newPassword: ''
+                password: ''
             }} onSubmit={handleSumbit} validationSchema={Yup.object().shape({
                 first_name: Yup.string().required('Geçerli bir ad girmen gerekiyor.').min(2, 'Ad en az 2 karakterden oluşmalı').trim(),
                 last_name: Yup.string().required('Geçerli bir soyad girmen gerekiyor.').min(3, 'Soyad en az 3 karakterden oluşmalı').trim(),
                 email: Yup.string().email('Geçerli bir e-posta adresi girmen gerekiyor.').required('E-posta adresini girmen gerekiyor.').min(6, 'E-posta adresini girmen gerekiyor').max(128, 'E-posta en fazla 128 karakter olabilir').trim(),
-                newPassword: Yup.string().min(6, 'Parola en az 6 karakterden oluşmalı.').max(32, 'Parola en fazla 64 karakter olabilir')
+                password: Yup.string().min(6, 'Parola en az 6 karakterden oluşmalı.').max(32, 'Parola en fazla 64 karakter olabilir')
             })}>
                 {({
                       values, handleChange, handleSubmit, handleBlur, errors, isValid, isSubmitting, touched
@@ -65,14 +65,14 @@ function ModalInput(props) {
                             onBlur={handleBlur}
                         />
                         <ModalDefaultInput
-                            name='newPassword'
+                            name='password'
                             label='New Password'
                             placeholder='New Password'
                             type='password'
-                            value={values.newPassword}
-                            onChange={handleChange('newPassword')}
-                            errors={errors.newPassword}
-                            touched={touched.newPassword}
+                            value={values.password}
+                            onChange={handleChange('password')}
+                            errors={errors.password}
+                            touched={touched.password}
                             onBlur={handleBlur}
                         />
                         <div className="flex mb-3">

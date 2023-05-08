@@ -91,14 +91,14 @@ class UserRepository
     public function update(User $user, $params): User
     {
         $user->forceFill($this->formatParams($params, 'update'))->save();
-        // todo
+        // todo may be bug in role & perms
         // make sure roles and permission are not removed
         // if they are not specified at all in params
         if (array_key_exists('roles', $params)) {
-            $this->attachRoles($user, Arr::get($params, 'roles'));
+            $user->attachRoles($user, Arr::get($params, 'roles'));
         }
         if (array_key_exists('permissions', $params)) {
-            $this->syncPermissions($user, Arr::get($params, 'permissions'));
+            $user->syncPermissions($user, Arr::get($params, 'permissions'));
         }
 
         return $user->load(['roles', 'permissions']);
@@ -141,6 +141,8 @@ class UserRepository
             'last_name' => $params['last_name'] ?? null,
         ];
 
+        $formatted['email'] = $params['email'];
+
         if (isset($params['email_verified_at'])) {
             $formatted['email_verified_at'] = $params['email_verified_at'];
         }
@@ -150,7 +152,6 @@ class UserRepository
         }
 
         if ($type === 'create') {
-            $formatted['email'] = $params['email'];
             $formatted['password'] = Arr::get($params, 'password') ? Hash::make(($params['password'])) : null;
         } else if ($type === 'update' && Arr::get($params, 'password')) {
             $formatted['password'] = Hash::make(($params['password']));

@@ -33,6 +33,7 @@ const UsersList = () => {
     const [selectedRow, setSelectedRow] = useState(null);
 
     const {isOpen, onOpen, onClose} = useDisclosure();
+
     function setUserDataToModal(row) {
         setSelectedRow(row)
         onOpen();
@@ -63,17 +64,20 @@ const UsersList = () => {
         }
     }
 
-
     async function handleModifyFormSubmit(...values) {
-            try {
-                 await updateUser(...values).unwrap()
-                //todo deleteResponse
-                setAlertMessage({type: 'success', head: 'Success', message: 'Successfully.'});
-            } catch (error) {
-                if (error.data.message) {
-                    setAlertMessage({type: 'error', head: 'Error!', message: error.data.message});
-                }
+        try {
+            await updateUser(...values).unwrap()
+            const updatedUser = {...values}
+            //todo deleteResponse
+            setAlertMessage({type: 'success', head: 'Success', message: 'Successfully.'});
+            setFetchedUsers((prevUsers) => {
+                return prevUsers.map((user) => user.id === updatedUser[0].id ? {...user, ...updatedUser[0]} : user);
+            });
+        } catch (error) {
+            if (error.data.message) {
+                setAlertMessage({type: 'error', head: 'Error!', message: error.data.message});
             }
+        }
     }
 
     const refetchUsers = useCallback(() => {
@@ -87,35 +91,32 @@ const UsersList = () => {
         }
     }, [userDatas]);
 
-    return (
-        <div>
+    return (<div>
+        {alertMessage && (<LayoutAlert
+            type={alertMessage.type}
+            head={alertMessage.head}
+            desc={alertMessage.message}
+        />)}
 
-            {alertMessage && (<LayoutAlert
-                type={alertMessage.type}
-                head={alertMessage.head}
-                desc={alertMessage.message}
-            />)}
+        <UserModal isOpen={isOpen}
+                   onClose={onClose}
+                   title={'Update User Details'}
+                   data={selectedRow}
+                   handleModifyForm={handleModifyFormSubmit}
 
-            <UserModal isOpen={isOpen}
-                          onClose={onClose}
-                          title={'Update User Details'}
-                          data={selectedRow}
-                          handleModifyForm={handleModifyFormSubmit}
+        />
 
+        <div className="mt-5 grid h-full grid-cols-1 gap-5 ">
+            <ColumnsTable
+                columnsData={usersDataColumns}
+                tableData={fetchedUsers ? fetchedUsers : loadingColumns}
+                onInputChange={(newValue) => setSearchTerm(newValue)}
+                handleDelete={handleDelete}
+                getUserForModal={setUserDataToModal}
+                refetchUsers={refetchUsers}
             />
-
-            <div className="mt-5 grid h-full grid-cols-1 gap-5 ">
-                <ColumnsTable
-                    columnsData={usersDataColumns}
-                    tableData={fetchedUsers ? fetchedUsers : loadingColumns}
-                    onInputChange={(newValue) => setSearchTerm(newValue)}
-                    handleDelete={handleDelete}
-                    getUserForModal={setUserDataToModal}
-                    refetchUsers={refetchUsers}
-                />
-            </div>
         </div>
-    );
+    </div>);
 };
 
 export default memo(UsersList);
