@@ -4,6 +4,8 @@ import * as Yup from "yup";
 import ModalDefaultInput from "@/components/admin/modal/input";
 import ModalDefaultSaveButton from "@/components/admin/modal/button/save";
 import ModalDefaultButton from "@/components/admin/modal/button/save";
+import {FormControl} from "@mui/material";
+import ExampleAvatar from "@/assets/images/avatars/avatar.png";
 
 
 function ModalInput(props) {
@@ -31,6 +33,19 @@ function ModalInput(props) {
                   }) => (
 
                     <>
+                        <FormControl className="!flex !flex-row items-center !relative justify-center">
+                            <div className="shrink-0 mb-10">
+                                <img className="h-40 w-40 object-cover  rounded-full"
+                                     src={ExampleAvatar}
+                                     alt="Current profile photo"/>
+                            </div>
+                            <label className="block absolute bottom-0">
+                                <span className="sr-only">Choose profile photo</span>
+                                <input type="file" className="pl-5 block w-full text-sm text-slate-500
+                    file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm
+                    file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 "/>
+                            </label>
+                        </FormControl>
                         <ModalDefaultInput
                             name={'first_name'}
                             label='Name'
@@ -75,14 +90,14 @@ function ModalInput(props) {
                             touched={touched.password}
                             onBlur={handleBlur}
                         />
-                        <div className="flex mb-3">
+                        <div className="flex mb-3 mt-8">
                             <ModalDefaultButton
-                                className={'!bg-blue-500 !text-white !dark:bg-blue-100'}
+                                className={'!bg-gray-500 !rounded !text-white !dark:bg-blue-100'}
                                 name="Roles"
                                 disabled={true}
                             />
                             <ModalDefaultButton
-                                className={'!bg-blue-500 !text-white !dark:bg-blue-100 ml-5'}
+                                className={'!bg-gray-500 !rounded !text-white !dark:bg-blue-100 ml-5'}
                                 name="Permissions"
                                 disabled={true}
                             />

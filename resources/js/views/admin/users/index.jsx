@@ -4,6 +4,7 @@ import {useAllUsersQuery, useDeleteUserMutation, useUpdateUserMutation} from "@/
 import LayoutAlert from "@/components/admin/alert";
 import {useDisclosure} from "@chakra-ui/hooks";
 import UserModal from "@/views/admin/users/components/modify";
+import TableLoading from "@/components/admin/loading/table";
 
 const usersDataColumns = [{
     Header: "NAME", accessor: "first_name",
@@ -24,36 +25,49 @@ const loadingColumns = [{
 },]
 
 const UsersList = () => {
-    const [fetchedUsers, setFetchedUsers] = useState(false);
-    const [searchTerm, setSearchTerm] = useState("");
-    const [alertMessage, setAlertMessage] = useState(null);
-    const [deleteUser, {isDeleteLoading}] = useDeleteUserMutation();
-    const {data: userDatas, refetch} = useAllUsersQuery(searchTerm ?? searchTerm)
-    const [updateUser, {isLoading}] = useUpdateUserMutation()
+    const paginationChoices = [5, 15, 25, 50, 75, 100]; // Varsayılan sayfa boyutları
+    const [paginationAmount, setPaginationAmount] = useState(paginationChoices[1]); // Varsayılan sayfa boyutu
+    const [page, setPage] = useState(false); // Page
+    const [fetchedUsers, setFetchedUsers] = useState(false); // Backend'den alınmış user verileri
+    const [fetchedData, setFetchedData] = useState(false); // Backend'den alınmış sayfalama & user verileri
+    const [searchTerm, setSearchTerm] = useState("");  //Arama
+    const [alertMessage, setAlertMessage] = useState(null);  //Alert Message
+
+    /*  Fetching User Data */
+    const {data: userDatas, refetch} = useAllUsersQuery({
+        searchTerm: searchTerm ?? searchTerm, perPage: paginationAmount ?? paginationAmount, page: page ?? page
+    });
+
+    useEffect(() => {
+        if (!isLoading && userDatas?.data) {
+            setFetchedUsers(userDatas?.data.data);
+            setFetchedData(userDatas?.data);
+        }
+    }, [userDatas]);
+    /*  Fetching User Data End*/
+
+    /*Set User to Modal */
     const [selectedRow, setSelectedRow] = useState(null);
-
     const {isOpen, onOpen, onClose} = useDisclosure();
-
     function setUserDataToModal(row) {
         setSelectedRow(row)
         onOpen();
     }
+    /*Set User to Modal END */
 
+    /* if searchTerm Changes */
     useEffect(() => {
-        if (alertMessage) {
-            const timer = setTimeout(() => {
-                setAlertMessage(null);
-            }, 2000);
+        setPage(1)
+    }, [searchTerm]);
+    /* END   */
 
-            return () => clearTimeout(timer);
-        }
-    }, [alertMessage]);
 
+    /*Delete User*/
+    const [deleteUser] = useDeleteUserMutation();
     async function handleDelete(UserID) {
         if (UserID) {
             try {
-                const deleteResponse = await deleteUser(UserID).unwrap()
-                //todo deleteResponse
+                await deleteUser(UserID).unwrap()
                 setAlertMessage({type: 'success', head: 'Success', message: 'Successfully.'});
                 setFetchedUsers(fetchedUsers.filter((user) => user.id !== UserID));
             } catch (error) {
@@ -63,12 +77,14 @@ const UsersList = () => {
             }
         }
     }
+    /*Delete User END*/
 
+    /*Modify User*/
+    const [updateUser, {isLoading}] = useUpdateUserMutation()
     async function handleModifyFormSubmit(...values) {
         try {
             await updateUser(...values).unwrap()
             const updatedUser = {...values}
-            //todo deleteResponse
             setAlertMessage({type: 'success', head: 'Success', message: 'Successfully.'});
             setFetchedUsers((prevUsers) => {
                 return prevUsers.map((user) => user.id === updatedUser[0].id ? {...user, ...updatedUser[0]} : user);
@@ -79,17 +95,27 @@ const UsersList = () => {
             }
         }
     }
+    /*Modify User END*/
 
+    /*Refresh */
     const refetchUsers = useCallback(() => {
         refetch();
         setAlertMessage({type: 'Success', head: 'Success', message: 'Data refreshed successfully.'});
-    }, [refetch]);
+    }, [refetch, paginationAmount]);
 
+    /*Refresh END*/
+
+    /*       Alert         */
     useEffect(() => {
-        if (!isLoading && userDatas?.data) {
-            setFetchedUsers(userDatas?.data.data);
+        if (alertMessage) {
+            const timer = setTimeout(() => {
+                setAlertMessage(null);
+            }, 2000);
+
+            return () => clearTimeout(timer);
         }
-    }, [userDatas]);
+    }, [alertMessage]);
+    /*       Alert    END     */
 
     return (<div>
         {alertMessage && (<LayoutAlert
@@ -110,10 +136,15 @@ const UsersList = () => {
             <ColumnsTable
                 columnsData={usersDataColumns}
                 tableData={fetchedUsers ? fetchedUsers : loadingColumns}
+                fullData={fetchedData}
                 onInputChange={(newValue) => setSearchTerm(newValue)}
                 handleDelete={handleDelete}
                 getUserForModal={setUserDataToModal}
                 refetchUsers={refetchUsers}
+                setPaginationAmount={setPaginationAmount}
+                paginationChoices={paginationChoices}
+                paginationAmount={paginationAmount}
+                onPageChange={(newPageIndex) => setPage(newPageIndex)}
             />
         </div>
     </div>);

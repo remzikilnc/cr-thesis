@@ -16,7 +16,8 @@ import {logOut, selectCurrentUser} from "@/store/auth/authSlice";
 import {useLogoutMutation} from "@/store/api/auth/authApiSlice";
 
 const Navbar = (props) => {
-  const dispatch = useDispatch()
+  const dispatch =
+      useDispatch()
   const { onOpenSidenav, brandText } = props;
   const [darkmode, setDarkmode] = React.useState(false)
 
