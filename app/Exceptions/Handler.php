@@ -2,10 +2,14 @@
 
 namespace App\Exceptions;
 
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Auth\AuthenticationException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Validation\UnauthorizedException;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -33,7 +37,7 @@ class Handler extends ExceptionHandler
             ], 403);
         });
 
-        $this->renderable(function (\Illuminate\Auth\AuthenticationException $e, $request){
+        $this->renderable(function (AuthenticationException $e, $request) {
             return response()->json([
                 'success' => false,
                 'message' => 'Access Denied.',
@@ -47,11 +51,25 @@ class Handler extends ExceptionHandler
             ], 403);
         });
 
-        $this->renderable(function (\Illuminate\Auth\Access\AuthorizationException $e, $request) {
+        $this->renderable(function (AuthorizationException $e, $request) {
             return response()->json([
                 'success' => false,
                 'message' => 'Access Denied.',
             ], 403);
+        });
+
+        $this->renderable(function (NotFoundHttpException  $e, $request) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Not Found!'
+            ], 404);
+        });
+
+        $this->renderable(function (ModelNotFoundException  $e, $request) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Not Found!'
+            ], 404);
         });
     }
 }

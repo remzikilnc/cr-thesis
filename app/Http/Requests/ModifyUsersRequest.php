@@ -57,7 +57,7 @@ class ModifyUsersRequest extends FormRequest
 
         throw new HttpResponseException(response()->json([
             'success'   => false,
-            'message'   => 'Validation errors',
+            'message'   => 'form-validation-errors',
             'errors'=> $validator->errors()
         ],406));
 

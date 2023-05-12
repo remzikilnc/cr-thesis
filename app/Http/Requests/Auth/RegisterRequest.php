@@ -39,20 +39,20 @@ class RegisterRequest extends FormRequest
     public function messages()
     {
         return [
-            'first_name.required' => 'Ad alanı boş bırakılamaz.',
-            'first_name.min' => 'Ad alanı en az 2 karakter olmalıdır..',
-            'first_name.max' => 'Ad alanı en fazla 128 karakter olmalıdır..',
-            'last_name.required' => 'Soyad alanı alanı boş bırakılamaz.',
-            'last_name.min' => 'Soyad alanı en az 3 karakter olmalıdır..',
-            'last_name.max' => 'Soyad alanı alanı en fazla 128 karakter olmalıdır..',
-            'email.required' => 'E-posta alanı boş bırakılamaz.',
-            'email.unique' => 'Bu e-posta adresi zaten kullanımda.',
-            'email.max' => 'E-posta en fazla 128 karakter olabilir.',
-            'email.email' => 'Lütfen geçerli bir E-posta adresi giriniz.',
-            'password.required' => 'Parola alanı boş bırakılamaz.',
-            'password.confirmed' => 'Girdiğiniz parolalar birbirleriyle eşleşmiyor.',
-            'password.max' => 'Parola en fazla 64 karakter olabilir.',
-            'password.min' => 'Parola en az 6 karakter olmalıdır.',
+            'first_name.required' => 'First name field cannot be blank.',
+            'first_name.min' => 'First name must be at least 2 characters.',
+            'first_name.max' => 'First name cannot exceed 128 characters.',
+            'last_name.required' => 'Last name field cannot be blank.',
+            'last_name.min' => 'Last name must be at least 3 characters.',
+            'last_name.max' => 'Last name cannot exceed 128 characters.',
+            'email.required' => 'Email field cannot be blank.',
+            'email.unique' => 'This email address is already in use.',
+            'email.max' => 'Email cannot exceed 128 characters.',
+            'email.email' => 'Please enter a valid email address.',
+            'password.required' => 'Password field cannot be blank.',
+            'password.confirmed' => 'The entered passwords do not match.',
+            'password.max' => 'Password cannot exceed 64 characters.',
+            'password.min' => 'Password must be at least 6 characters.',
         ];
     }
 
@@ -61,7 +61,7 @@ class RegisterRequest extends FormRequest
 
         throw new HttpResponseException(response()->json([
             'success'   => false,
-            'message'   => 'Validation errors',
+            'message'   => 'form-validation-errors',
             'errors'=> $validator->errors()
         ],406));
 

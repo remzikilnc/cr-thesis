@@ -44,6 +44,21 @@ return [
                 'description' =>
                     'Allow viewing products on the site.',
             ],
+            [
+                'name' => 'products.create',
+                'description' =>
+                    'Allow creating products on the site.',
+            ],
+            [
+                'name' => 'products.update',
+                'description' =>
+                    'Allow updating products on the site.',
+            ],
+            [
+                'name' => 'products.delete',
+                'description' =>
+                    'Allow deleting products on the site.',
+            ],
         ],
 
     ],

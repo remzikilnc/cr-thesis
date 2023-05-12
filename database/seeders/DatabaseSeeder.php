@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
         app(PermissionTableSeeder::class)->__invoke();
         app(RolesTableSeeder::class)->__invoke();
         app(SettingsTableSeeder::class)->__invoke();
+        app(CategorySeeder::class)->__invoke();
 
 
         //default admin
@@ -27,6 +28,8 @@ class DatabaseSeeder extends Seeder
         UserFactory::new()->count(25)->create()->each(function ($fakeUser){
             $fakeUser->assignRole(Role::where('default',true)->first());
         });
+
+
 
     }
 }

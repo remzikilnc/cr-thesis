@@ -61,6 +61,15 @@ class UserController extends BaseController
 
     }
 
+    public function update(User $user, ModifyUsersRequest $request)
+    {
+        $this->authorize('update', $user);
+
+        $user = $this->userRepository->update($user, $request->all());
+
+        return response()->ok(['user' => $user]);
+    }
+
     /**
      * @throws AuthorizationException
      */
@@ -96,12 +105,4 @@ class UserController extends BaseController
 
     }
 
-    public function update(User $user, ModifyUsersRequest $request)
-    {
-        $this->authorize('update', $user);
-
-        $user = $this->userRepository->update($user, $request->all());
-
-        return response()->ok(['user' => $user]);
-    }
 }
