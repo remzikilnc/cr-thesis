@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Staudenmeir\LaravelAdjacencyList\Eloquent\HasRecursiveRelationships;
 
 class Category extends Model
@@ -12,6 +13,16 @@ class Category extends Model
     use HasRecursiveRelationships;
 
     protected $guarded = ['id'];
+
+    /**
+     * @return MorphMany
+     */
+    public function images(): MorphMany
+    {
+        return $this->morphMany(Image::class, 'model')
+            ->select(['id', 'model_id', 'model_type', 'url', 'type'])
+            ->orderBy('order', 'asc');
+    }
 
     public function getParentKeyName(): string
     {

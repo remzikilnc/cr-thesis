@@ -38,9 +38,9 @@ class UpdateProductRequest extends FormRequest
             'status' => 'sometimes|boolean',
             'categories' => 'array',
             'categories.*' => 'exists:categories,id',
-            'images' => 'array',
+            'images' => 'nullable|array',
             'images.*.file' => 'image',
-            'images.*.type' => 'in:backdrop,poster',
+            'images.*.type' => 'string|in:backdrop,poster',
         ];
     }
 

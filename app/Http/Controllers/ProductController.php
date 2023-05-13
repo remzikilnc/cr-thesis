@@ -51,7 +51,7 @@ class ProductController extends BaseController
             $product = $this->product->where('id', $productId)->findOrFail();
         }
 
-        $response = $product->load(['images']);
+        $product->load(['images']);
 
         $this->dispatch(
             new IncrementModelViews(

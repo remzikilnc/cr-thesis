@@ -41,12 +41,12 @@ trait StoresMediaImages
                 throw new InvalidArgumentException("The provided file is not a valid image.");
             }
 
-            $hash =  Str::random(30);
+            $hash = Str::random(30);
             $extension = $file->extension() ?? 'jpeg';
             $type = $type ?? 'backdrop';
 
             foreach ($this->imageSizes as $sizeName => $dimensions) {
-                $this->writeImgVariantsToDisk($file,$type, $hash, $extension, $sizeName, $dimensions);
+                $this->writeImgVariantsToDisk($file, $type, $hash, $extension, $sizeName, $dimensions);
             }
 
             $imageModel = new Image([
@@ -73,7 +73,7 @@ trait StoresMediaImages
      * @param string $sizeName
      * @param int|null $dimensions
      */
-    private function writeImgVariantsToDisk(UploadedFile $file,string $type, string $hash, string $extension, string $sizeName, ?int $dimensions): void
+    private function writeImgVariantsToDisk(UploadedFile $file, string $type, string $hash, string $extension, string $sizeName, ?int $dimensions): void
     {
         $image = ImageIntervention::make($file);
 
@@ -84,6 +84,6 @@ trait StoresMediaImages
         }
 
         $path = "media-images/$type/$hash/$sizeName.$extension";
-        Storage::disk('public')->put($path, (string) $image->encode($extension));
+        Storage::disk('public')->put($path, (string)$image->encode($extension));
     }
 }

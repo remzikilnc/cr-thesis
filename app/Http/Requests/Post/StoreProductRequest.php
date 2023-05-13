@@ -38,7 +38,7 @@ class StoreProductRequest extends FormRequest
             'categories.*' => 'exists:categories,id',
             'images' => 'array',
             'images.*.file' => 'image',
-            'images.*.type' => 'in:backdrop,poster',
+            'images.*.type' => 'string|in:backdrop,poster',
         ];
     }
 

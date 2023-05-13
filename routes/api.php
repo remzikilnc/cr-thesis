@@ -20,5 +20,6 @@ Route::group(['prefix' => 'v1', 'middleware' => 'api'], function () {
     Route::middleware(['optional_auth_sanctum'])->group(function () {
         Route::apiResource("users", \App\Http\Controllers\UserController::class);
         Route::apiResource("products", \App\Http\Controllers\ProductController::class);
+        Route::apiResource("categories", \App\Http\Controllers\CategoryController::class);
     });
 });
