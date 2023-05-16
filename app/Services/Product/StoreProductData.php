@@ -56,7 +56,7 @@ class StoreProductData
                     $this->persistCategories($values);
                     break;
                 case 'images':
-                    $this->storeImages($values, $this->product);
+                    $this->storeImagesToProduct($values);
                     break;
             }
         }
@@ -66,5 +66,10 @@ class StoreProductData
     private function persistCategories(array $values)
     {
         $this->product->categories()->sync($values);
+    }
+
+    private function storeImagesToProduct(array $values)
+    {
+        $this->storeImages($values, $this->product);
     }
 }

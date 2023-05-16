@@ -43,10 +43,8 @@ class LoginController extends BaseController
             $accessToken = $user->currentAccessToken();
             if ($accessToken) {
                 $accessToken->delete();
-                $this->guard()->logout();
             }
         }
-        $this->guard()->logout();
         return response()->noContent();
     }
 }

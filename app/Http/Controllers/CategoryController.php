@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Category\StoreCategoryRequest;
+use App\Http\Requests\Category\UpdateCategoryRequest;
 use App\Models\Category;
 use App\Models\Image;
 use App\Models\Product;
@@ -13,7 +14,7 @@ use Illuminate\Http\Request;
 
 class CategoryController extends BaseController
 {
-    use  StoresMediaImages;
+    use StoresMediaImages;
 
     private Request $request;
     private Category $category;
@@ -47,25 +48,30 @@ class CategoryController extends BaseController
     }
 
 
-    public function update(Category $category, $request)
+    public function update(Category $category, UpdateCategoryRequest $request)
     {
+        $this->authorize('update', Category::class);
+
         //todo !!BUG!! form-data olarak gönderilmiyor -> IMAGE uploadı ayrı bir api endpointiyle yapmak lazım..
         $this->authorize('update', Category::class);
-        /*
-                $product = app(StoreProductData::class)->execute($product, $request->all(), [
-                    'overrideWithEmptyValues' => true,
-                ]);
 
-                return response()->ok($product);*/
+        $categoryData = array_filter($request->all(), function ($value) {
+            // Boş veya null değerlerin var olan değerlerin üzerine yazılmasını önlüyooruz
+            return !is_array($value) && (!is_null($value));
+        });
+
+        $category->fill($categoryData)->save();
+
+        return response()->ok($category);
     }
 
 
     /**
-     * @throws AuthorizationException
+     * @throws AuthorizationException|\Throwable
      */
     public function store(StoreCategoryRequest $request)
     {
-        $this->authorize('store', Product::class);
+        $this->authorize('store', Category::class);
 
         $category = new Category;
         $category->parent_id = $request->parent_id;
@@ -82,23 +88,17 @@ class CategoryController extends BaseController
     /**
      * @throws AuthorizationException
      */
-    public function destroy()
+    public function destroy(Category $category)
     {
-        $this->authorize('destroy', Product::class);
-
-        $categoryIds = $this->request->get('ids');
+        $this->authorize('destroy', Category::class);
 
         // images
         app(Image::class)
-            ->whereIn('model_id', $categoryIds)
-            ->where('model_type', Product::class)
+            ->where('model_id', $category->id)
+            ->where('model_type', Category::class)
             ->delete();
 
-        /*        todo reviews & comments
-                app(Review::class)
-                    ->delete();*/
-
-        $this->category->whereIn('id', $categoryIds)->delete();
+        $category->delete();
 
         return response()->noContent();
 

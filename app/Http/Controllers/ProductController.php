@@ -6,6 +6,7 @@ use App\Actions\PaginateProducts;
 use App\Http\Requests\Post\StoreProductRequest;
 use App\Http\Requests\Post\UpdateProductRequest;
 use App\Jobs\IncrementModelViews;
+use App\Models\Category;
 use App\Models\Image;
 use App\Models\Product;
 use App\Services\Product\StoreProductData;
@@ -48,7 +49,7 @@ class ProductController extends BaseController
         if ($request->get('with') === 'categories') {
             $product = Product::with('categories.ancestorsWithNormalized')->findOrFail($productId);
         } else {
-            $product = $this->product->where('id', $productId)->findOrFail();
+            $product = Product::query()->findOrFail($productId);
         }
 
         $product->load(['images']);
@@ -90,29 +91,40 @@ class ProductController extends BaseController
             'overrideWithEmptyValues' => true,
         ]);
 
+        $product->load(['images']);
+
+        $product->load('categories.ancestorsWithNormalized');
+
         return response()->ok($product);
     }
 
     /**
      * @throws AuthorizationException
      */
-    public function destroy()
+    public function destroy(Product $product)
     {
         $this->authorize('destroy', Product::class);
 
-        $productIds = $this->request->get('ids');
 
-        // images
+        // Find the product
+
+
+        // Delete associated images
         app(Image::class)
-            ->whereIn('model_id', $productIds)
+            ->where('model_id', $product->id)
             ->where('model_type', Product::class)
             ->delete();
 
-        /*        todo reviews & comments
-                app(Review::class)
-                    ->delete();*/
+        // Detach associated categories
+        $product->categories()->detach();
 
-        $this->product->whereIn('id', $productIds)->delete();
+        /* TODO: Delete associated reviews & comments
+            app(Review::class)
+                ->where('product_id', $productId)
+                ->delete();
+        */
+
+        $product->delete();
 
         return response()->noContent();
 

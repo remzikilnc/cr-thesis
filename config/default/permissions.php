@@ -8,6 +8,7 @@ return [
             'guard_name'=> 'api',
             'permissions' => [
                 'products.view',
+                'category.view'
             ],
         ],
         [
@@ -16,6 +17,7 @@ return [
             'guard_name'=> 'api',
             'permissions' => [
                 'products.view',
+                'category.view'
             ],
         ]
     ],
@@ -56,6 +58,28 @@ return [
             ],
             [
                 'name' => 'products.delete',
+                'description' =>
+                    'Allow deleting products on the site.',
+            ],
+        ],
+        'category' => [
+            [
+                'name' => 'category.view',
+                'description' =>
+                    'Allow viewing products on the site.',
+            ],
+            [
+                'name' => 'category.create',
+                'description' =>
+                    'Allow creating products on the site.',
+            ],
+            [
+                'name' => 'category.update',
+                'description' =>
+                    'Allow updating products on the site.',
+            ],
+            [
+                'name' => 'category.delete',
                 'description' =>
                     'Allow deleting products on the site.',
             ],
