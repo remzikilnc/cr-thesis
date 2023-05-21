@@ -38,6 +38,7 @@
         "web-vitals": "^2.1.4"
     },
     "dependencies": {
+        "@chakra-ui/react": "^2.6.1",
         "@emotion/react": "^11.10.6",
         "@emotion/styled": "^11.10.6",
         "@headlessui/react": "^1.7.13",

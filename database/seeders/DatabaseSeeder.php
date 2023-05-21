@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
         app(RolesTableSeeder::class)->__invoke();
         app(SettingsTableSeeder::class)->__invoke();
         app(CategorySeeder::class)->__invoke();
+        app(ProductsTableSeeder::class)->__invoke();
 
 
         //default admin

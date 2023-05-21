@@ -52,7 +52,6 @@ const ColumnsTable = (props) => {
 
     const handleInputChange = useCallback((newValue) => {
         props.onInputChange(newValue);
-        console.log('qwe')
     }, [props.onInputChange]);
 
     return (<Card extra={"w-full pb-10 p-4 h-full"}>

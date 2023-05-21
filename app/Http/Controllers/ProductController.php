@@ -17,12 +17,10 @@ class ProductController extends BaseController
 {
 
     private Request $request;
-    private Product $product;
 
     public function __construct(Request $request, Product $product)
     {
         $this->request = $request;
-        $this->product = $product;
     }
 
     /**
@@ -30,6 +28,10 @@ class ProductController extends BaseController
      */
     public function index()
     {
+        // params:
+        // category_name,
+        // (orderBy) id // title // created_at // popularity // updated_at-> asc, desc
+        // query
         $this->authorize('index', Product::class);
 
         $pagination = app(PaginateProducts::class)->execute(
@@ -60,6 +62,7 @@ class ProductController extends BaseController
                 $product->id,
             ),
         );
+
 
         return response()->ok($product);
     }

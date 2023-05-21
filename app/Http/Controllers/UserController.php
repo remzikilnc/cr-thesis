@@ -20,7 +20,8 @@ class UserController extends BaseController
         UserRepository $userRepository,
         Request        $request,
         Settings       $settings
-    ) {
+    )
+    {
         $this->user = $user;
         $this->request = $request;
         $this->userRepository = $userRepository;
@@ -73,21 +74,18 @@ class UserController extends BaseController
     /**
      * @throws AuthorizationException
      */
-    public function destroy(string $UserID)
+    public function destroy(int $UserID)
     {
         $this->authorize('destroy', [User::class, $UserID]);
 
         $user = $this->user->where('id', $UserID)->first();
 
-        /*todo
-            if ($user is_admin) {
+        if ($user) {
+            if ($user->isAdmin()) {
                 return response()->error(
                     "Could not delete admin user",
                 );
             }
-        */
-
-        if ($user){
             $user->roles()->detach();
             $user->permissions()->detach();
             $user->tokens()->delete();
@@ -95,13 +93,13 @@ class UserController extends BaseController
             //todo comment & review
             event(new UsersDeleted([$user]));
             return response()->noContent(200);
-        }else {
+        } else {
             return response()->notFound();
         }
 
         //Todo Currently, a single user can be deleted, configure it to be multiple.
 
-/*        $this->userRepository->deleteMultiple($user->pluck('id'));*/
+        /*        $this->userRepository->deleteMultiple($user->pluck('id'));*/
 
     }
 

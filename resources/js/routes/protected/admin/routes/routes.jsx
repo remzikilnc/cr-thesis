@@ -2,7 +2,7 @@ import React from "react";
 
 // Admin Imports
 import MainDashboard from "@/views/admin/default";
-import NFTMarketplace from "@/views/admin/marketplace";
+import AdminProducts from "@/views/admin/products";
 import Profile from "@/views/admin/profile";
 import DataTables from "@/views/admin/tables";
 import UsersList from "@/views/admin/users";
@@ -13,7 +13,7 @@ import {
     MdOutlineShoppingCart,
     MdBarChart,
     MdPerson,
-    MdLock,
+    MdLock, MdPeopleAlt,
 } from "react-icons/md";
 
 const adminRoutes = [
@@ -25,11 +25,18 @@ const adminRoutes = [
         component: <MainDashboard />,
     },
     {
-        name: "Pazar Alanı",
+        name: "Users",
         layout: "/admin",
-        path: "pazar",
+        icon: <MdPeopleAlt className="h-6 w-6" />,
+        path: "users",
+        component: <UsersList />,
+    },
+    {
+        name: "Products",
+        layout: "/admin",
+        path: "products",
         icon: <MdOutlineShoppingCart className="h-6 w-6" />,
-        component: <NFTMarketplace />,
+        component: <AdminProducts />,
         secondary: true,
     },
     {
@@ -39,13 +46,7 @@ const adminRoutes = [
         path: "data-tables",
         component: <DataTables />,
     },
-    {
-        name: "Users",
-        layout: "/admin",
-        icon: <MdBarChart className="h-6 w-6" />,
-        path: "users",
-        component: <UsersList />,
-    },
+
     {
         name: "Profile",
         layout: "/admin",

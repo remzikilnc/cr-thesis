@@ -4,8 +4,6 @@ import {useDebounce} from "@/utils/useDebounce";
 
 function InlineSearchBar({handleInputChange, placeholder = 'Search..'}) {
 
-    useDebounce()
-
     const [inputValue, setInputValue] = useState('');
     const debouncedInputValue = useDebounce(inputValue, 750);
 

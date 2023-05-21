@@ -87,3 +87,5 @@ return [
 
     ],
 ];
+//dashboard.view
+//image view, create, update ,delete

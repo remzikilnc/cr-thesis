@@ -23,4 +23,8 @@ Route::group(['prefix' => 'v1', 'middleware' => 'api'], function () {
         Route::apiResource("products", \App\Http\Controllers\ProductController::class);
         Route::apiResource("categories", \App\Http\Controllers\CategoryController::class);
     });
+
+    Route::middleware(['auth:sanctum'])->group(function () {
+        Route::get("admin/dashboard", [\App\Http\Controllers\DashboardController::class, 'index']);
+    });
 });

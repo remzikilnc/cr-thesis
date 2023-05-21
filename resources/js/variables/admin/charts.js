@@ -132,9 +132,6 @@ export const pieChartOptions = {
       },
     },
   },
-  fill: {
-    colors: ["#4318FF", "#6AD2FF", "#EFF4FB"],
-  },
   tooltip: {
     enabled: true,
     theme: "dark",
@@ -258,12 +255,12 @@ export const barChartOptionsWeeklyRevenue = {
 
 export const lineChartDataTotalSpent = [
   {
-    name: "Revenue",
+    name: "Bu Hafta",
     data: [50, 64, 48, 66, 49, 68],
     color: "#4318FF",
   },
   {
-    name: "Profit",
+    name: "Geçen Hafta",
     data: [30, 40, 24, 46, 20, 46],
     color: "#6AD2FF",
   },
@@ -271,7 +268,7 @@ export const lineChartDataTotalSpent = [
 
 export const lineChartOptionsTotalSpent = {
   legend: {
-    show: false,
+    show: true,
   },
 
   theme: {
@@ -281,7 +278,7 @@ export const lineChartOptionsTotalSpent = {
     type: "line",
 
     toolbar: {
-      show: false,
+      show: true,
     },
   },
 
@@ -322,7 +319,7 @@ export const lineChartOptionsTotalSpent = {
     },
     type: "text",
     range: undefined,
-    categories: ["SEP", "OCT", "NOV", "DEC", "JAN", "FEB"],
+    categories: ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"],
   },
 
   yaxis: {

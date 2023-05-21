@@ -2,11 +2,11 @@
 
 namespace App\Models;
 
+use App\Http\Traits\Searchable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Support\Str;
-use Laravel\Scout\Searchable;
 
 /**
  */
@@ -15,7 +15,7 @@ class Product extends Model
     use Searchable;
 
     const MODEL_TYPE = 'product';
-    protected $guarded = ['id'];
+    protected $guarded = ['id','created_at', 'updated_at'];
     protected $appends = ['model_type'];
     public $hidden = [
         'price' => 'float',
@@ -29,7 +29,7 @@ class Product extends Model
 
         static::creating(function ($product) {
             if(empty($product->code)) { // eğer kod yoksa
-                $product->code = Str::upper(Str::random(15)); //rand kod
+                $product->code = Str::upper(Str::random(10)); //rand kod
             }
         });
     }
@@ -65,7 +65,7 @@ class Product extends Model
     {
         return [
             'id' => $this->id,
-            'name' => $this->name,
+            'title' => $this->title,
             'code' => $this->code,
             'popularity' => $this->popularity,
             'created_at' => $this->created_at->timestamp ?? '_null',
@@ -82,7 +82,7 @@ class Product extends Model
     {
         return [
             'id' => $this->id,
-            'name' => $this->name,
+            'title' => $this->title,
             'description' => Str::limit($this->description, 100),
             'image' => $this->poster,
             'model_type' => self::MODEL_TYPE,

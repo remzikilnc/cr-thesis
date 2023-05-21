@@ -16,62 +16,24 @@ use Laravel\Scout\Builder as ScoutBuilder;
 
 class CustomQueryBuilder
 {
-    /**
-     * @var EloquentBuilder
-     */
-    private $builder;
 
-    /**
-     * @var Model
-     */
-    private $model;
-
-    /**
-     * @var array
-     */
-    private $params;
-
-    private $queryBuilt = false;
-
-    /**
-     * @var CustomQueryBuilderFilters
-     */
-    private $filters;
-
-    /**
-     * @var array|false
-     */
-    public $order = null;
-
-    /**
-     * @var bool
-     */
-    private $usingDefaultOrder = false;
-
-    /**
-     * @var string
-     */
-    private $filtererName;
-
-
-    /**
-     * @var ScoutBuilder|null
-     */
-    private $scoutBuilder;
-
+    private EloquentBuilder $builder;
+    private Model $model;
+    private array $params;
+    private bool $queryBuilt = false;
+    private \App\QueryBuilders\CustomQueryBuilderFilters $filters;
+    public array|null|false $order = null;
 
     public function __construct(
         $model,
         array $params,
         CustomQueryBuilderFilters $filters = null,
-        string $filtererName = 'mysql'
     )
     {
         $this->model = $model->getModel();
         $this->params = $this->toCamelCase($params);
         $this->builder = $model->newQuery();
         $this->filters = $filters ?? new CustomQueryBuilderFilters($this->params['filters'] ?? null);
-        $this->filtererName = $filtererName;
     }
 
     public function paginate(): LengthAwarePaginator
@@ -79,7 +41,6 @@ class CustomQueryBuilder
         $this->buildQuery();
         $perPage = $this->limit();
         $page = (int)$this->param('page', 1);
-
         $total = $this->builder->toBase()->getCountForPagination();
         $results = $total ? $this->builder->forPage($page, $perPage)->get() : $this->model->newCollection();
 
