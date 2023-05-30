@@ -68,7 +68,7 @@ class ProductController extends BaseController
     }
 
 
-    public function update(Product $product, UpdateProductRequest $request)
+    public function update(Product $product, Request $request)
     {
         //todo !!BUG!! form-data olarak gönderilmiyor -> IMAGE uploadı ayrı bir api endpointiyle yapmak lazım..
         $this->authorize('update', Product::class);

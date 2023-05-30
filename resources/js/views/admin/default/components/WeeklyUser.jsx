@@ -6,7 +6,6 @@ import {
 } from "react-icons/md";
 import Card from "@/components/admin/card";
 import {
-  lineChartDataTotalSpent,
   lineChartOptionsTotalSpent,
 } from "@/variables/admin/charts";
 import LineChart from "@/components/admin/charts/LineChart";
@@ -49,7 +48,8 @@ const WeeklyUser = (props) => {
             <p className="mt-2 text-sm text-gray-600">Change</p>
             <div className="flex flex-row items-center justify-center">
               <MdArrowDropUp className="font-medium text-green-500" />
-              <p className="text-sm font-bold text-green-500"> {props.WeeklyChangeData} </p>
+              <p className="text-sm font-bold text-green-500">
+                  {'%'+ props.WeeklyChangeData.toFixed(2)} </p>
             </div>
           </div>
         </div>

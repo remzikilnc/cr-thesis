@@ -30,7 +30,7 @@ const Dashboard = () => {
         {/* Card widget */}
 
         <div className="mt-3 grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-3 3xl:grid-cols-6">
-            <Widget
+{/*            <Widget
                 icon={<MdBarChart className="h-7 w-7"/>}
                 title={"title"}
                 subtitle={"35 ₺"}
@@ -39,7 +39,7 @@ const Dashboard = () => {
                 icon={<IoDocuments className="h-6 w-6"/>}
                 title={"title"}
                 subtitle={"1 ₺"}
-            />
+            />*/}
             <Widget
                 icon={<MdBarChart className="h-7 w-7"/>}
                 title={"Toplam Kullanıcı Sayısı"}
@@ -55,11 +55,11 @@ const Dashboard = () => {
                 title={"Aktif Ürünler"}
                 subtitle={data.data?.activeProductsCount}
             />
-            <Widget
+{/*            <Widget
                 icon={<IoMdHome className="h-6 w-6"/>}
                 title={"Aktif Ürünler"}
                 subtitle={data.data?.activeProductsCount}
-            />
+            />*/}
         </div>
 
         {/* Charts */}
@@ -67,24 +67,24 @@ const Dashboard = () => {
         <div className="mt-5 grid grid-cols-1 gap-5 md:grid-cols-2">
             <WeeklyUser boardData={data.data?.UserDataByDay} WeeklyChangeData={data.data?.UserDataWeeklyChange}
             />
-            <WeeklyRevenue/>
+{/*            <WeeklyRevenue/>*/}
         </div>
 
         {/* Tables & Charts */}
 
         <div className="mt-5 grid grid-cols-1 gap-5 xl:grid-cols-2">
             {/* Check Table */}
-            <div>
+{/*            <div>
                 <CheckTable
                     columnsData={columnsDataCheck}
                     tableData={tableDataCheck}
                 />
-            </div>
+            </div>*/}
 
             {/* Traffic chart & Pie Chart */}
 
             <div className="grid grid-cols-1 gap-5 rounded-[20px] md:grid-cols-2">
-                <DailyTraffic/>
+{/*                <DailyTraffic/>*/}
                 <PieChartCard
                     pieChartData={data.data?.parentCategoriesHasItem.categories}
                     pieChartFooterParentCount={data.data?.parentCategoriesHasItem.parent_categories}
@@ -94,15 +94,15 @@ const Dashboard = () => {
 
             {/* Complex Table , Task & Calendar */}
 
-            <ComplexTable
+{/*            <ComplexTable
                 columnsData={columnsDataComplex}
                 tableData={tableDataComplex}
-            />
+            />*/}
 
             {/* Task chart & Calendar */}
 
             <div className="grid grid-cols-1 gap-5 rounded-[20px] md:grid-cols-2">
-                <TaskCard/>
+{/*                <TaskCard/>*/}
                 <div className="grid grid-cols-1 rounded-[20px]">
                 </div>
             </div>

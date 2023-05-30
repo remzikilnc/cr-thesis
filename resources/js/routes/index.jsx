@@ -6,7 +6,6 @@ import {selectCurrentUserToken, setUser} from "@/store/auth/authSlice";
 import {useAuthenticateQuery} from "@/store/api/auth/authApiSlice";
 
 import FrontContainer from "@/containers/FrontContainer";
-import Home from "@/views/Home/Home";
 import Login from "@/views/auth/login";
 import Register from "@/views/auth/register";
 import RequireAuth from "@/routes/protected/user";
@@ -14,11 +13,9 @@ import Profile from "@/views/user/profile";
 import RequireAdmin from "@/routes/protected/admin";
 import AuthLayout from "@/layouts/auth";
 import AdminLayout from "@/layouts/admin";
-
-
+import Home from "@/views/user/home";
 
 function MainRoutes() {
-
     const dispatch = useDispatch()
     const token = useSelector(selectCurrentUserToken)
     const {data: userData, error, isLoading} = useAuthenticateQuery(token, {skip: !token})

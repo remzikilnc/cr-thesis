@@ -6,6 +6,7 @@ import AdminProducts from "@/views/admin/products";
 import Profile from "@/views/admin/profile";
 import DataTables from "@/views/admin/tables";
 import UsersList from "@/views/admin/users";
+import EditProduct from "@/views/admin/products/edit";
 
 // Icon Imports
 import {
@@ -38,6 +39,13 @@ const adminRoutes = [
         icon: <MdOutlineShoppingCart className="h-6 w-6" />,
         component: <AdminProducts />,
         secondary: true,
+    },
+    {
+        name: "Edit Product",
+        layout: "/admin",
+        path: "products/:id",
+        component: <EditProduct/>,
+        hidden: true,
     },
     {
         name: "Data Tables",

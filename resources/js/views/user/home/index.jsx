@@ -1,13 +1,14 @@
 import React from 'react';
-import FrontLayout from "@/components/user/Layout/FrontLayout";
+import FrontHeader from "@/layouts/user";
 
-function Home() {
+function UserHome() {
     return (
-        <>
-            <FrontLayout>
-            </FrontLayout>
-        </>
+            <>
+                <FrontHeader/>
+                <div className="justify-between flex">
+                </div>
+            </>
     );
 }
 
-export default Home;
+export default UserHome;

@@ -4,7 +4,6 @@ import {useAllUsersQuery, useDeleteUserMutation, useUpdateUserMutation} from "@/
 import LayoutAlert from "@/components/admin/alert";
 import {useDisclosure} from "@chakra-ui/hooks";
 import UserModal from "@/views/admin/users/components/modify";
-import TableLoading from "@/components/admin/loading/table";
 
 const usersDataColumns = [{
     Header: "NAME", accessor: "first_name",
@@ -49,10 +48,12 @@ const UsersList = () => {
     /*Set User to Modal */
     const [selectedRow, setSelectedRow] = useState(null);
     const {isOpen, onOpen, onClose} = useDisclosure();
+
     function setUserDataToModal(row) {
         setSelectedRow(row)
         onOpen();
     }
+
     /*Set User to Modal END */
 
     /* if searchTerm Changes */
@@ -64,6 +65,7 @@ const UsersList = () => {
 
     /*Delete User*/
     const [deleteUser] = useDeleteUserMutation();
+
     async function handleDelete(UserID) {
         if (UserID) {
             try {
@@ -77,10 +79,12 @@ const UsersList = () => {
             }
         }
     }
+
     /*Delete User END*/
 
     /*Modify User*/
     const [updateUser, {isLoading}] = useUpdateUserMutation()
+
     async function handleModifyFormSubmit(...values) {
         try {
             await updateUser(...values).unwrap()
@@ -95,6 +99,7 @@ const UsersList = () => {
             }
         }
     }
+
     /*Modify User END*/
 
     /*Refresh */
@@ -123,7 +128,6 @@ const UsersList = () => {
             head={alertMessage.head}
             desc={alertMessage.message}
         />)}
-
         <UserModal isOpen={isOpen}
                    onClose={onClose}
                    title={'Update User Details'}
@@ -131,7 +135,6 @@ const UsersList = () => {
                    handleModifyForm={handleModifyFormSubmit}
 
         />
-
         <div className="mt-5 grid h-full grid-cols-1 gap-5 ">
             <ColumnsTable
                 columnsData={usersDataColumns}
