@@ -74,28 +74,23 @@ class UserController extends BaseController
     /**
      * @throws AuthorizationException
      */
-    public function destroy(int $UserID)
+    public function destroy(User $user)
     {
-        $this->authorize('destroy', [User::class, $UserID]);
+        $this->authorize('destroy', [$user]);
 
-        $user = $this->user->where('id', $UserID)->first();
-
-        if ($user) {
-            if ($user->isAdmin()) {
-                return response()->error(
-                    "Could not delete admin user",
-                );
-            }
-            $user->roles()->detach();
-            $user->permissions()->detach();
-            $user->tokens()->delete();
-            $user->delete();
-            //todo comment & review
-            event(new UsersDeleted([$user]));
-            return response()->noContent(200);
-        } else {
-            return response()->notFound();
+        if ($user->isAdmin()) {
+            return response()->error(
+                "Could not delete admin user",
+            );
         }
+        $user->roles()->detach();
+        $user->permissions()->detach();
+        $user->tokens()->delete();
+        $user->delete();
+        //todo comment & review
+        event(new UsersDeleted([$user]));
+        return response()->noContent(200);
+
 
         //Todo Currently, a single user can be deleted, configure it to be multiple.
 

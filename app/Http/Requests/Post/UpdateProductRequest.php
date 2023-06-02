@@ -25,13 +25,12 @@ class UpdateProductRequest extends FormRequest
      */
     public function rules()
     {
-        $productId = $this->route('product');
-
+        $productId = $this->route('product')->id;
         return [
             'title' => 'max:96',
             'description' => 'nullable|string|max:3000',
             'code' => 'sometimes|unique:products,code,' . $productId,
-            'price' => 'sometimes|integer',
+            'price' => 'sometimes|numeric',
             'quantity' => 'sometimes|integer',
             'poster' => 'nullable|string',
             'popularity' => 'nullable|integer',

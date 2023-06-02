@@ -4,6 +4,7 @@ namespace App\Abstracts;
 
 
 use App\Http\Traits\Searchable;
+use App\Models\Comment;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Collection;
@@ -86,6 +87,11 @@ abstract class BaseUser extends Authenticatable
     public function isAdmin()
     {
         return $this->hasRole('admin');
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
     }
 
 }

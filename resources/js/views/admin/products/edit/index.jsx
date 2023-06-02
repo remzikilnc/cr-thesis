@@ -47,7 +47,7 @@ function EditProduct() {
                 setAlertMessage({type: 'success', head: 'Product was updated', message: 'Successfully.'});
             }
         } catch (error) {
-            setAlertMessage({type: 'error', head: 'Failed to update product!', message: error.data.message});
+            setAlertMessage({type: 'error', head: 'Failed to update product!', message: Object.values(error.data.errors)[0]});
         }
     };
 

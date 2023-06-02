@@ -53,6 +53,12 @@ class Product extends Model
 
     }
 
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
 /*    public function comments(): MorphMany
     {
         return $this->morphMany(Comment::class, 'commentable')->orderBy(

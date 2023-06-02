@@ -32,23 +32,29 @@ class UserPolicy
 
     public function update(User $current, User $toUpdate = null)
     {
-        // user has proper permissions
         if ($current->hasPermissionTo('users.update')) {
             return true;
         }
 
-        return true;
+        if ($toUpdate !== null && $current->id === $toUpdate->id) {
+            return true;
+        }
+
+        return false;
     }
 
-    public function destroy(User $user, array $userIds)
+    public function destroy(User $current, User $toDelete)
     {
-        $deletingOwnAccount = collect($userIds)->every(function (
-            int $userId
-        ) use ($user) {
-            return $userId === $user->id;
-        });
+        // user has proper permissions
+        if ($current->hasPermissionTo('users.delete')) {
+            return true;
+        }
 
-        return $deletingOwnAccount || $user->hasPermissionTo('users.delete');
+        // user is deleting own profile
+        if ($current->id === $toDelete->id) {
+            return true;
+        }
+
+        return false;
     }
-
 }

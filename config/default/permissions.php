@@ -8,7 +8,9 @@ return [
             'guard_name'=> 'api',
             'permissions' => [
                 'products.view',
-                'category.view'
+                'categories.view',
+                'comments.view',
+                'comments.create'
             ],
         ],
         [
@@ -17,7 +19,8 @@ return [
             'guard_name'=> 'api',
             'permissions' => [
                 'products.view',
-                'category.view'
+                'categories.view',
+                'comments.view'
             ],
         ]
     ],
@@ -62,26 +65,53 @@ return [
                     'Allow deleting products on the site.',
             ],
         ],
-        'category' => [
+        'categories' => [
             [
-                'name' => 'category.view',
+                'name' => 'categories.view',
                 'description' =>
                     'Allow viewing products on the site.',
             ],
             [
-                'name' => 'category.create',
+                'name' => 'categories.create',
                 'description' =>
                     'Allow creating products on the site.',
             ],
             [
-                'name' => 'category.update',
+                'name' => 'categories.update',
                 'description' =>
                     'Allow updating products on the site.',
             ],
             [
-                'name' => 'category.delete',
+                'name' => 'categories.delete',
                 'description' =>
                     'Allow deleting products on the site.',
+            ],
+        ],
+        'comment' => [
+            [
+                'name' => 'comments.view',
+                'description' =>
+                    'Allow viewing comments on the site, where status 1. User can view own comments.',
+            ],
+            [
+                'name' => 'comments.view_inactive',
+                'description' =>
+                    'Allow viewing ALL comments on the site, for this permission comments.view permission is needed.',
+            ],
+            [
+                'name' => 'comments.create',
+                'description' =>
+                    'Allow creating comments on the site.',
+            ],
+            [
+                'name' => 'comments.update',
+                'description' =>
+                    'Allow updating comments on the site. User can update own comments',
+            ],
+            [
+                'name' => 'comments.delete',
+                'description' =>
+                    'Allow deleting comments on the site. User can delete own comments',
             ],
         ],
 

@@ -17,6 +17,10 @@ return [
         'access_key' => env('UNSPLASH_ACCESS_KEY'),
     ],
 
+    'openai' => [
+        'access_key' => env('OPENAI_ACCESS_KEY'),
+    ],
+
     'mailgun' => [
         'domain' => env('MAILGUN_DOMAIN'),
         'secret' => env('MAILGUN_SECRET'),

@@ -22,6 +22,8 @@ Route::group(['prefix' => 'v1', 'middleware' => 'api'], function () {
         Route::apiResource("users", \App\Http\Controllers\UserController::class);
         Route::apiResource("products", \App\Http\Controllers\ProductController::class);
         Route::apiResource("categories", \App\Http\Controllers\CategoryController::class);
+        //Comments
+        Route::resource('products.comments', \App\Http\Controllers\CommentController::class)->only(['index', 'store']);
     });
 
     Route::middleware(['auth:sanctum'])->group(function () {

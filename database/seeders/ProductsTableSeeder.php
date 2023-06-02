@@ -65,7 +65,7 @@ class ProductsTableSeeder extends Seeder
             'Samsung Galaxy Watch 4',
             'Amazon Kindle Paperwhite',
         ];
-        foreach (range(1, 45) as $index) {
+        foreach (range(1, 15) as $index) {
             $status = $index % 5 === 0 ? 0 : 1;
             $product = Product::create([
                 'title' => $productNames[array_rand($productNames)],
