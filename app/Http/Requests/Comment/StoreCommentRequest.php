@@ -1,9 +1,11 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Comment;
 
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Validation\Validator;
 
 class StoreCommentRequest extends FormRequest
 {
@@ -25,5 +27,16 @@ class StoreCommentRequest extends FormRequest
         return [
             'comment' => ['required', 'string', 'max:500'],
         ];
+    }
+
+    public function failedValidation(Validator|\Illuminate\Contracts\Validation\Validator $validator)
+    {
+
+        throw new HttpResponseException(response()->json([
+            'success'   => false,
+            'message'   => 'form-validation-errors',
+            'errors'=> $validator->errors()
+        ],406));
+
     }
 }

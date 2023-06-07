@@ -8,9 +8,8 @@ import {setCredentials} from "@/store/auth/authSlice";
 import {
     Card, Body, LeadFont, DefaultInput, DefaultButton, Link, DefaultLabel
 } from "@/views/Auth/styles";
-import AlertDanger from "@/components/user/CustomFormComponents/Alert/Danger";
-import {CheckboxContainer} from "@/components/user/CustomFormComponents/CustomCheckbox/styles";
-
+import AlertDanger from "@/components/auth/alert/danger";
+import {CheckboxContainer} from "@/components/auth/checkbox/styles";
 
 function Login() {
 

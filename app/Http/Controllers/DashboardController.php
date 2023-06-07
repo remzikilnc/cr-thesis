@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Comment;
 use App\Models\Product;
 use App\Models\User;
 use Carbon\Carbon;
@@ -63,6 +64,9 @@ class DashboardController extends BaseController
         // Statusu 1 olan ürün sayısı
         $activeProductsCount = Product::where('status', 1)->count();
 
+        // Comments data
+        $commentsData = $this->commentsData();
+
         $data = [
             'newUsersCount' => $newUsersCount,
             'totalUsersCount' => $totalUsersCount,
@@ -71,6 +75,7 @@ class DashboardController extends BaseController
             'totalProductsCount' => $totalProductsCount,
             'activeProductsCount' => $activeProductsCount,
             'parentCategoriesHasItem' => $CategoriesHaveProduct,
+            'commentsData' => $commentsData,
         ];
 
         return response()->ok($data);
@@ -105,5 +110,27 @@ class DashboardController extends BaseController
         $response['child_categories'] = Category::whereNotNull('parent_id')->count();
 
         return $response;
+    }
+
+    private function commentsData(): array
+    {
+            // Statusu 0 olan yorum sayısı
+            $inactiveCommentsCount = Comment::where('status', 0)->count();
+
+            // Statusu 1 olan yorum sayısı
+            $activeCommentsCount = Comment::where('status', 1)->count();
+
+            // Toplam yorum sayısı
+            $totalCommentsCount = Comment::count();
+
+            // Son 30 günde eklenen yorum sayısı
+            $newCommentsCount = Comment::where('created_at', '>=', Carbon::now()->subDays(30))->count();
+
+        return [
+            'newCommentsCount' => $newCommentsCount,
+            'totalCommentsCount' => $totalCommentsCount,
+            'inactiveCommentsCount' => $inactiveCommentsCount,
+            'activeCommentsCount' => $activeCommentsCount,
+        ];
     }
 }

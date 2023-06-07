@@ -3,7 +3,8 @@ import React, {memo, useCallback, useEffect, useState} from "react";
 import {useAllUsersQuery, useDeleteUserMutation, useUpdateUserMutation} from "@/store/api/users/usersApiSlice";
 import LayoutAlert from "@/components/admin/alert";
 import {useDisclosure} from "@chakra-ui/hooks";
-import UserModal from "@/views/admin/users/components/modify";
+import EditModal from "@/components/admin/modal/edit";
+import UserEditInput from "@/views/admin/users/components/modify/input";
 
 const usersDataColumns = [{
     Header: "NAME", accessor: "first_name",
@@ -128,12 +129,12 @@ const UsersList = () => {
             head={alertMessage.head}
             desc={alertMessage.message}
         />)}
-        <UserModal isOpen={isOpen}
+        <EditModal isOpen={isOpen}
                    onClose={onClose}
                    title={'Update User Details'}
                    data={selectedRow}
                    handleModifyForm={handleModifyFormSubmit}
-
+                   InputComponent={UserEditInput}
         />
         <div className="mt-5 grid h-full grid-cols-1 gap-5 ">
             <ColumnsTable

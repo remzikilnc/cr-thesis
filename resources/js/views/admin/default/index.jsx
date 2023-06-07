@@ -26,6 +26,8 @@ const Dashboard = () => {
         );
     }
 
+    console.log(data.data)
+
     return (<div>
         {/* Card widget */}
 
@@ -42,18 +44,33 @@ const Dashboard = () => {
             />*/}
             <Widget
                 icon={<MdBarChart className="h-7 w-7"/>}
-                title={"Toplam Kullanıcı Sayısı"}
+                title={"Total User"}
                 subtitle={data.data?.totalUsersCount}
             />
             <Widget
                 icon={<MdBarChart className="h-7 w-7"/>}
-                title={"Toplam Ürünler"}
+                title={"Total Products"}
                 subtitle={data.data?.totalProductsCount}
             />
             <Widget
                 icon={<MdBarChart className="h-7 w-7"/>}
-                title={"Aktif Ürünler"}
+                title={"Active Products"}
                 subtitle={data.data?.activeProductsCount}
+            />
+            <Widget
+                icon={<MdBarChart className="h-7 w-7"/>}
+                title={"Total Comments"}
+                subtitle={data.data?.commentsData?.totalCommentsCount}
+            />
+            <Widget
+                icon={<MdBarChart className="h-7 w-7"/>}
+                title={"Inactive Comments"}
+                subtitle={data.data?.commentsData?.inactiveCommentsCount}
+            />
+            <Widget
+                icon={<MdBarChart className="h-7 w-7"/>}
+                title={"Active Comments"}
+                subtitle={data.data?.commentsData?.activeCommentsCount}
             />
 {/*            <Widget
                 icon={<IoMdHome className="h-6 w-6"/>}

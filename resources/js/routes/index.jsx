@@ -5,15 +5,12 @@ import {useDispatch, useSelector} from "react-redux";
 import {selectCurrentUserToken, setUser} from "@/store/auth/authSlice";
 import {useAuthenticateQuery} from "@/store/api/auth/authApiSlice";
 
-import FrontContainer from "@/containers/FrontContainer";
 import Login from "@/views/auth/login";
 import Register from "@/views/auth/register";
-import RequireAuth from "@/routes/protected/user";
-import Profile from "@/views/user/profile";
 import RequireAdmin from "@/routes/protected/admin";
 import AuthLayout from "@/layouts/auth";
 import AdminLayout from "@/layouts/admin";
-import Home from "@/views/user/home";
+import UserLayout from "@/layouts/user";
 
 function MainRoutes() {
     const dispatch = useDispatch()
@@ -28,32 +25,15 @@ function MainRoutes() {
 
     return (<Routes>
 
-        {/*-----MAIN PAGES-----*/}
-        <Route exact path="/" element={<FrontContainer/>}>
-            <Route index={true} element={<Home/>}></Route>
-        </Route>
-        {/*-----MAIN PAGES END-----*/}
-
-        {/*-----AUTH PAGES-----*/}
-        <Route path="/" element={<AuthLayout/>}>
+        <Route exact path="/*" element={<UserLayout/>}/>
+        <Route path="/auth" element={<AuthLayout/>}>
             <Route index={false}></Route>
             <Route path="login" element={<Login/>}/>
             <Route path="register" element={<Register/>}/>
         </Route>
-        {/*-----AUTH PAGES END-----*/}
-
-        {/*-----NEEDED AUTH -----*/}
-        <Route element={<RequireAuth/>}>
-            <Route path="/profil" element={<Profile/>}/>
-        </Route>
-        {/*-----NEEDED AUTH END-----*/}
-
-        {/*-----NEEDED ADMIN ROLE-----*/}
         <Route element={<RequireAdmin/>}>
             <Route path="admin/*" element={<AdminLayout />} />
         </Route>
-        {/*-----NEEDED ADMIN ROLE END-----*/}
-
     </Routes>);
 }
 

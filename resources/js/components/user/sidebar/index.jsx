@@ -3,10 +3,10 @@
 import { HiX } from "react-icons/hi";
 import Links from "./components/Links";
 
-import adminRoutes from "@/routes/protected/admin/routes/routes";
 import ChangeThemeMode from "@/components/components/ChangeThemeMode";
+import userRoutes from "@/routes/protected/user/routes/routes";
 
-const Sidebar = ({ open, onClose }) => {
+const UserSidebar = ({ open, onClose }) => {
   return (
     <div
       className={`sm:none duration-175 z-[100] linear fixed  flex min-h-full flex-col bg-white pb-10 shadow-2xl shadow-white/5 transition-all dark:!bg-navy-800 dark:text-white md:!z-50 lg:!z-50 xl:!z-0 ${
@@ -29,7 +29,7 @@ const Sidebar = ({ open, onClose }) => {
       {/* Nav item */}
 
       <ul className="mb-auto pt-1">
-        <Links routes={adminRoutes} />
+        <Links routes={userRoutes} />
       </ul>
 
       {/* Change Theme Mode */}
@@ -42,4 +42,4 @@ const Sidebar = ({ open, onClose }) => {
   );
 };
 
-export default Sidebar;
+export default UserSidebar;

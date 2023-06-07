@@ -8,7 +8,7 @@ import {useRegisterMutation} from "@/store/api/auth/authApiSlice";
 import {
     Card, Body, LeadFont, DefaultInput, DefaultButton, DefaultLabel,
 } from "@/views/Auth/styles";
-import AlertDanger from "@/components/user/CustomFormComponents/Alert/Danger";
+import AlertDanger from "@/components/auth/alert/danger";
 
 function Register() {
     const [backErrors, setBackErrors] = useState({});

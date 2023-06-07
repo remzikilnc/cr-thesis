@@ -2,13 +2,12 @@ import React, {useState} from 'react';
 import {Formik} from "formik";
 import * as Yup from "yup";
 import ModalDefaultInput from "@/components/admin/modal/input";
-import ModalDefaultSaveButton from "@/components/admin/modal/button/save";
 import ModalDefaultButton from "@/components/admin/modal/button/save";
 import {FormControl} from "@mui/material";
 import ExampleAvatar from "@/assets/images/avatars/avatar.png";
 
 
-function ModalInput(props) {
+function UserEditInput(props) {
     const { data, handleFormSubmit } = props;
     const handleSumbit = (values, actions) => {
         handleFormSubmit({ ...values, id: data.id });
@@ -118,4 +117,4 @@ function ModalInput(props) {
     );
 }
 
-export default ModalInput;
+export default UserEditInput;

@@ -17,7 +17,7 @@ function Notification() {
         <div className="mt-3 flex items-center gap-3">
           <Switch id="switch1" />
           <label
-              htmlFor="checkbox1"
+            for="checkbox1"
             className="text-base font-medium text-navy-700 dark:text-white"
           >
             Item comment notifications
@@ -27,7 +27,7 @@ function Notification() {
         <div className="mt-4 flex items-center gap-3">
           <Switch id="switch2" />
           <label
-              htmlFor="checkbox2"
+            for="checkbox2"
             className="text-base font-medium text-navy-700 dark:text-white"
           >
             Buyer review notifications
@@ -37,7 +37,7 @@ function Notification() {
         <div className="mt-4 flex items-center gap-3">
           <Switch id="switch3" />
           <label
-              htmlFor="checkbox3"
+            for="checkbox3"
             className="text-base font-medium text-navy-700 dark:text-white"
           >
             Rating reminders notifications
@@ -47,7 +47,7 @@ function Notification() {
         <div className="mt-4 flex items-center gap-3">
           <Switch id="switch4" />
           <label
-              htmlFor="checkbox4"
+            for="checkbox4"
             className="text-base font-medium text-navy-700 dark:text-white"
           >
             Meetups near you notifications
@@ -57,7 +57,7 @@ function Notification() {
         <div className="mt-4 flex items-center gap-3">
           <Switch id="switch5" />
           <label
-              htmlFor="checkbox5"
+            for="checkbox5"
             className="text-base font-medium text-navy-700 dark:text-white"
           >
             Company news notifications
@@ -67,7 +67,7 @@ function Notification() {
         <div className="mt-4 flex items-center gap-3">
           <Switch id="switch6" />
           <label
-              htmlFor="checkbox6"
+            for="checkbox6"
             className="text-base font-medium text-navy-700 dark:text-white"
           >
             New launches and projects
@@ -76,7 +76,7 @@ function Notification() {
         <div className="mt-4 flex items-center gap-3">
           <Switch id="switch7" />
           <label
-              htmlFor="checkbox7"
+            for="checkbox7"
             className="text-base font-medium text-navy-700 dark:text-white"
           >
             Monthly product changes
@@ -85,7 +85,7 @@ function Notification() {
         <div className="mt-4 flex items-center gap-3">
           <Switch id="switch8" />
           <label
-              htmlFor="checkbox8"
+            for="checkbox8"
             className="text-base font-medium text-navy-700 dark:text-white"
           >
             Subscribe to newsletter
@@ -94,7 +94,7 @@ function Notification() {
         <div className="mt-4 flex items-center gap-3">
           <Switch id="switch8" />
           <label
-              htmlFor="checkbox8"
+            for="checkbox8"
             className="text-base font-medium text-navy-700 dark:text-white"
           >
             Email me when someone follows me

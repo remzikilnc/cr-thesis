@@ -13,8 +13,7 @@ import {
     MdHome,
     MdOutlineShoppingCart,
     MdBarChart,
-    MdPerson,
-    MdLock, MdPeopleAlt,
+    MdPerson, MdPeopleAlt,
 } from "react-icons/md";
 
 const adminRoutes = [

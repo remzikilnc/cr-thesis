@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Actions\PaginateComments;
-use App\Http\Requests\StoreCommentRequest;
+use App\Http\Requests\Comment\StoreCommentRequest;
+use App\Http\Requests\Comment\UpdateCommentRequest;
 use App\Jobs\ProcessComment;
 use App\Models\Comment;
 use App\Models\Product;
@@ -45,9 +46,12 @@ class CommentController extends BaseController
     }
 
 
-    public function update(Request $request, Product $product, Comment $comment)
+    public function update(UpdateCommentRequest $request, Product $product, Comment $comment)
     {
         $this->authorize('update', $comment);
+
+        $validatedData = $request->validated();
+        $comment->update($validatedData);
 
         return response()->ok($comment);
     }
@@ -73,7 +77,7 @@ class CommentController extends BaseController
     /**
      * @throws AuthorizationException
      */
-    public function destroy(Comment $comment)
+    public function destroy(Product $product, Comment $comment)
     {
         $this->authorize('destroy', $comment);
 

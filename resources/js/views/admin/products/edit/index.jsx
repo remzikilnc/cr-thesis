@@ -2,23 +2,23 @@ import React, {useState, useEffect} from 'react';
 import {useParams} from 'react-router-dom';
 import {useShowProductQuery, useUpdateProductMutation} from "@/store/api/products";
 import TableLoading from "@/components/admin/loading/table";
-import {Button, VStack, FormControl, FormLabel} from "@chakra-ui/react";
+import {VStack, FormControl, FormLabel} from "@chakra-ui/react";
 import Card from "@/components/admin/card";
 import TextField from "@mui/material/TextField";
 import EditableTextarea from "@/components/admin/fields/default/textarea";
 import CustomImageList from "@/components/admin/image/listing";
 import ModalDefaultButton from "@/components/admin/modal/button/save";
 import LayoutAlert from "@/components/admin/alert";
+import CommentList from "@/views/admin/products/comments";
 
 
 function EditProduct() {
     const {id} = useParams();
-    const {data, isLoading, refetch} = useShowProductQuery({id: id, withCategories: true});
+    const {data, isLoading} = useShowProductQuery({id: id, withCategories: true});
     const [updateProduct, {
         data: updateData, isLoading: updateLoading, error: updateError
     }] = useUpdateProductMutation();
     const [alertMessage, setAlertMessage] = useState(null);  //Alert Message
-
 
     const [product, setProduct] = useState(null);
 
@@ -47,7 +47,9 @@ function EditProduct() {
                 setAlertMessage({type: 'success', head: 'Product was updated', message: 'Successfully.'});
             }
         } catch (error) {
-            setAlertMessage({type: 'error', head: 'Failed to update product!', message: Object.values(error.data.errors)[0]});
+            setAlertMessage({
+                type: 'error', head: 'Failed to update product!', message: Object.values(error.data.errors)[0]
+            });
         }
     };
 
@@ -91,7 +93,7 @@ function EditProduct() {
                                         label="Title"
                                         name={"title"}
                                         defaultValue={product.title}
-                                        className={"w-full"}
+                                        className={"w-full !z-0"}
                                         onChange={handleChange}
                                     />
                                 </FormControl>
@@ -103,7 +105,7 @@ function EditProduct() {
                                         label="Price"
                                         name={"price"}
                                         defaultValue={product.price}
-                                        className={"w-full"}
+                                        className={"w-full !z-0"}
                                         onChange={handleChange}
                                     />
                                 </FormControl>
@@ -115,7 +117,7 @@ function EditProduct() {
                                         label="Quantity"
                                         name={"quantity"}
                                         defaultValue={product.quantity}
-                                        className={"w-full"}
+                                        className={"w-full !z-0"}
                                         onChange={handleChange}
                                     />
                                 </FormControl>
@@ -127,7 +129,7 @@ function EditProduct() {
                                         label="Code"
                                         name={"code"}
                                         defaultValue={product.code}
-                                        className={"w-full"}
+                                        className={"w-full !z-0"}
                                         onChange={handleChange}
                                     />
                                 </FormControl>
@@ -139,7 +141,7 @@ function EditProduct() {
                                         label="Views"
                                         name="views"
                                         defaultValue={product.views}
-                                        className={"w-full"}
+                                        className={"w-full !z-0"}
                                         onChange={handleChange}
                                     />
                                 </FormControl>
@@ -151,7 +153,7 @@ function EditProduct() {
                                         label="Vote Count"
                                         name="vote_count"
                                         defaultValue={product.vote_count}
-                                        className={"w-full"}
+                                        className={"w-full !z-0"}
                                         onChange={handleChange}
                                     />
                                 </FormControl>
@@ -173,6 +175,7 @@ function EditProduct() {
                 </div>
                 <ModalDefaultButton onClick={handleSubmit}/>
             </VStack>
+            <CommentList product_id={id}></CommentList>
         </Card>
     </>);
 }

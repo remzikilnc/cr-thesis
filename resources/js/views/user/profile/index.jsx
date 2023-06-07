@@ -1,19 +1,30 @@
-import React, {useEffect, useState} from 'react';
+import Banner from "./components/Banner";
+import Notification from "./components/Notification";
+import Upload from "./components/Upload";
 import {useSelector} from "react-redux";
 import {selectCurrentUser} from "@/store/auth/authSlice";
 
-
-function Profile(props) {
-
+const UserProfileOverview = () => {
     const user = useSelector(selectCurrentUser)
-
-
+    user?.email
     return (
-        <>
-            <div className="mb-10 text-white">{user?.email}</div>
+        <div className="flex w-full flex-col gap-5">
+            <div className="w-ful mt-3 flex h-fit flex-col gap-5 lg:grid lg:grid-cols-12">
+                <div className="col-span-4 lg:!mb-0">
+                    <Banner />
+                </div>
 
-        </>
+                <div className="z-0 col-span-5 lg:!mb-0">
+                    <Upload />
+                </div>
+            </div>
+            <div className="grid h-full grid-cols-1 gap-5 lg:!grid-cols-12">
+                <div className="col-span-5 lg:col-span-12 lg:mb-0 3xl:!col-span-3">
+                    <Notification />
+                </div>
+            </div>
+        </div>
     );
-}
+};
 
-export default Profile;
+export default UserProfileOverview;

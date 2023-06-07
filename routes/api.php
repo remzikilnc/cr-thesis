@@ -23,7 +23,7 @@ Route::group(['prefix' => 'v1', 'middleware' => 'api'], function () {
         Route::apiResource("products", \App\Http\Controllers\ProductController::class);
         Route::apiResource("categories", \App\Http\Controllers\CategoryController::class);
         //Comments
-        Route::resource('products.comments', \App\Http\Controllers\CommentController::class)->only(['index', 'store']);
+        Route::resource('products.comments', \App\Http\Controllers\CommentController::class)->only(['index', 'store', 'update', 'destroy']);
     });
 
     Route::middleware(['auth:sanctum'])->group(function () {
