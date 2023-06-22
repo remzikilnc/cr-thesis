@@ -32,19 +32,6 @@ function UserEditInput(props) {
                   }) => (
 
                     <>
-                        <FormControl className="!flex !flex-row items-center !relative justify-center">
-                            <div className="shrink-0 mb-10">
-                                <img className="h-40 w-40 object-cover  rounded-full"
-                                     src={ExampleAvatar}
-                                     alt="Current profile photo"/>
-                            </div>
-                            <label className="block absolute bottom-0">
-                                <span className="sr-only">Choose profile photo</span>
-                                <input type="file" className="pl-5 block w-full text-sm text-slate-500
-                    file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm
-                    file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 "/>
-                            </label>
-                        </FormControl>
                         <ModalDefaultInput
                             name={'first_name'}
                             label='Name'

@@ -5,6 +5,7 @@ html {
     font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, Ubuntu;
 }
 
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

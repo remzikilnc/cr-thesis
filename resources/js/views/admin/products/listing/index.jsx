@@ -2,7 +2,7 @@ import React, {useCallback, useEffect, useState} from 'react';
 import ExampleProductIMG from "@/assets/images/products/product1.png";
 import ExampleAvatar from "@/assets/images/avatars/avatar.png";
 import CardSearch from "@/components/admin/card/CardSearch";
-import ProductCard from "@/components/admin/card/ProductCard";
+import ProductCard from "@/components/components/card/ProductCard";
 import {Pagination} from "@mui/material";
 import TableDefaultPaginationAmount from "@/components/admin/table/pagination/amount";
 import LayoutAlert from "@/components/admin/alert";

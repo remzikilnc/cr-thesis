@@ -36,15 +36,12 @@ trait AuthenticatesUser
             'email.string' => 'E-posta adresi geçerli bir metin olmalıdır.',
             'email.max' => 'E-posta adresi en fazla 128 karakter olmalıdır.',
             'email.email' => 'E-posta adresi geçerli bir e-posta formatında olmalıdır.',
-
             'password.required' => 'Şifre gereklidir.',
             'password.max' => 'Şifre en fazla 32 karakter olmalıdır.',
             'password.string' => 'Şifre geçerli bir metin olmalıdır.',
             'password.min' => 'Şifre en az 6 karakter olmalıdır.',
-
             'remember.boolean' => 'Hatırla seçeneği doğru veya yanlış (true/false) olmalıdır.',
         ]);
-
         if ($validator->fails()) {
             return response()->badRequest('Validation errors',$validator->errors());
         }

@@ -114,6 +114,13 @@ return [
                     'Allow deleting comments on the site. User can delete own comments',
             ],
         ],
+        'role' => [
+            [
+                'name' => 'role.view',
+                'description' =>
+                    'Allow viewing user roles on the site.',
+            ],
+        ],
 
     ],
 ];

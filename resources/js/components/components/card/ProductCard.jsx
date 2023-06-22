@@ -12,18 +12,22 @@ const ProductCard = ({title, description, price, quantity, code, poster, images,
             {isHovered &&
                 <p className={"flex justify-center items-center w-full h-full absolute mr-10 text-xl font-semibold text-themeDarkPrimary dark:text-red-500"}>
                     <span className="z-10">This item will be deleted.</span></p>}
-            <button
-                className={"bg-red-200 rounded-b-xl items-center flex dark:bg-pink-950 z-10 right-0 md:rounded-l-none px-1 xl:px-2 md:rounded-[20px] items-center justify-center text-gray-600 dark:text-white"}
-                onMouseEnter={() => setIsHovered(true)}
-                onMouseLeave={() => setIsHovered(false)}
-                onClick={handleDelete}>
-                <MdClose size={"18"} className={"text-black dark:text-white"}/>
-            </button>
-            <button
-                className={"bg-blue-200 dark:bg-blue-800 items-center flex right-0 px-1 xl:px-2 z-10 items-center justify-center text-gray-600 dark:text-white"}
-                onClick={handleModify}>
-                <MdModeEditOutline size={"18"} className={"text-black dark:text-white"}/>
-            </button>
+            {handleDelete &&
+                <button
+                    className={"bg-red-200 rounded-b-xl items-center flex dark:bg-pink-950 z-10 right-0 md:rounded-l-none px-1 xl:px-2 md:rounded-[20px] items-center justify-center text-gray-600 dark:text-white"}
+                    onMouseEnter={() => setIsHovered(true)}
+                    onMouseLeave={() => setIsHovered(false)}
+                    onClick={handleDelete}>
+                    <MdClose size={"18"} className={"text-black dark:text-white"}/>
+                </button>
+            }
+            {handleModify &&
+                <button
+                    className={"bg-blue-200 dark:bg-blue-800 items-center flex right-0 px-1 xl:px-2 z-10 items-center justify-center text-gray-600 dark:text-white"}
+                    onClick={handleModify}>
+                    <MdModeEditOutline size={"18"} className={"text-black dark:text-white"}/>
+                </button>
+            }
             <Card
                 extra={`flex flex-col w-full h-full rounded-b-none md:rounded-b-xl md:!rounded-r-none ${isHovered ? 'blur-sm' : ''} !p-4 3xl:p-![18px] bg-white ${extra}`}
             >
@@ -82,22 +86,25 @@ const ProductCard = ({title, description, price, quantity, code, poster, images,
                                     </span>
                                 </p>
                             </div>
-                            <div className="flex items-center w-full mb-5 rounded drop-shadow-2xl shadow-inner">
-                                <p className="text-sm font-bold text-black dark:text-white linear text-base font-medium transition duration-200 drop-shadow-2xl">
+                            {code &&
+                                <div className="flex items-center w-full mb-5 rounded drop-shadow-2xl shadow-inner">
+                                    <p className="text-sm font-bold text-black dark:text-white linear text-base font-medium transition duration-200 drop-shadow-2xl">
                                     <span className="flex flex-row justify-center items-center shadow-xl">
                                         <span
                                             className={"bg-navy-700 text-white dark:bg-navy-700 rounded items-center justify-center flex p-1 mr-1 shadow-inner text-xs xl:text-md"}>Code:</span> {code}TL
                                     </span>
-                                </p>
-                            </div>
-                            <div className="flex items-center w-full mb-5 rounded drop-shadow-2xl shadow-inner">
+                                    </p>
+                                </div>
+                            }
+                            {quantity &&
+                                <div className="flex items-center w-full mb-5 rounded drop-shadow-2xl shadow-inner">
                                 <p className="text-sm font-bold text-black dark:text-white linear text-base font-medium transition duration-200 drop-shadow-2xl">
                                     <span className="flex flex-row justify-center items-center shadow-xl">
                                         <span
                                             className={"bg-navy-700 text-white dark:bg-navy-700 rounded items-center justify-center flex p-1 mr-1 shadow-inner text-xs xl:text-md"}>Quantity:</span> {quantity}
                                     </span>
                                 </p>
-                            </div>
+                            </div>}
                         </div>
                     </div>
                 </div>

@@ -41,11 +41,12 @@ class UserController extends BaseController
         // permission,
         // (orderBy) last_name // first-name // created_at -> asc, desc
         // query
-
         $pagination = app(PaginateUsers::class)->execute($this->request->all());
+
         return response()->ok($pagination);
 
     }
+
 
     public function show(User $user)
     {
@@ -54,12 +55,13 @@ class UserController extends BaseController
         $relations = array_filter(
             explode(',', $this->request->get('with', '')),
         );
-        $relations = array_merge(['roles'], $relations);
 
+        if(Auth::user()->can('role.view')) {
+            $relations = array_merge(['roles'], $relations);
+        }
         $user->load($relations);
 
         return response()->ok(['user' => $user]);
-
     }
 
     public function update(User $user, ModifyUsersRequest $request)
