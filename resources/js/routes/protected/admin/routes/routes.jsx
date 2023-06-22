@@ -4,7 +4,6 @@ import React from "react";
 import MainDashboard from "@/views/admin/default";
 import AdminProducts from "@/views/admin/products";
 import Profile from "@/views/admin/profile";
-import DataTables from "@/views/admin/tables";
 import UsersList from "@/views/admin/users";
 import EditProduct from "@/views/admin/products/edit";
 
@@ -12,7 +11,6 @@ import EditProduct from "@/views/admin/products/edit";
 import {
     MdHome,
     MdOutlineShoppingCart,
-    MdBarChart,
     MdPerson, MdPeopleAlt,
 } from "react-icons/md";
 
@@ -45,13 +43,6 @@ const adminRoutes = [
         path: "products/:id",
         component: <EditProduct/>,
         hidden: true,
-    },
-    {
-        name: "Data Tables",
-        layout: "/admin",
-        icon: <MdBarChart className="h-6 w-6" />,
-        path: "data-tables",
-        component: <DataTables />,
     },
 
     {

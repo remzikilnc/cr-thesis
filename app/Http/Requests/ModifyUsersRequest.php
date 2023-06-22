@@ -34,10 +34,12 @@ class ModifyUsersRequest extends FormRequest
             'email' => 'required|email|max:128|unique:users,email,' . $userId,
             'permissions' => 'array',
             'roles' => 'array',
-            'old_password' => 'required_with:new_password,new_password_confirmation|current_password',
+            'old_password' => 'required_with:new_password,new_password_confirmation|current_password|nullable',
             'new_password' => 'nullable|required_with:old_password,new_password_confirmation|min:6|max:64',
             'new_password_confirmation' => 'nullable|required_with:old_password,new_password|same:new_password',
-
+            'address' => 'nullable|string|max:256',
+            'city' => 'nullable|string|max:256',
+            'postcode' => 'nullable|string|max:8',
         ];
     }
 

@@ -18,6 +18,9 @@ function UserProfileEdit(props) {
                 last_name: user?.last_name ?? '',
                 email: user?.email ?? '',
                 gender: user?.gender ?? 'male',
+                address: user?.address ?? 'male',
+                city: user?.city ?? '',
+                postcode: user?.postcode ?? '',
                 old_password: '',
                 new_password: '',
                 new_password_confirmation: ''
@@ -25,6 +28,9 @@ function UserProfileEdit(props) {
                 first_name: Yup.string().required('Please enter a valid first name.').min(2, 'First name must be at least 2 characters.').trim(),
                 last_name: Yup.string().required('Please enter a valid last name.').min(3, 'Last name must be at least 3 characters.').trim(),
                 email: Yup.string().email('Please enter a valid email address.').required('Email is required.').min(6, 'Email is required.').max(128, 'Email must be no more than 128 characters.').trim(),
+                address: Yup.string().min(2, 'Adress name must be at least 2 characters.').max(256, 'Adress name must be at least 256 characters.').trim(),
+                city: Yup.string().min(2, 'City name must be at least 2 characters.').max(256, 'City name must be at least 256 characters.').trim(),
+                postcode: Yup.string().min(2, 'Postcode name must be at least 2 characters.').max(8, 'Postcode name must be at least 8 characters.').trim(),
                 old_password: Yup.string().when(['new_password', 'new_password_confirmation'], {
                     is: (new_password, new_password_confirmation) => new_password || new_password_confirmation,
                     then: Yup.string().required('You must enter your old password.')
@@ -69,6 +75,39 @@ function UserProfileEdit(props) {
                         onChange={handleChange('email')}
                         errors={errors.email}
                         touched={touched.email}
+                        onBlur={handleBlur}
+                    />
+                    <ModalDefaultInput
+                        name={'address'}
+                        label='Address'
+                        placeholder='Address'
+                        type='text'
+                        value={values.address}
+                        onChange={handleChange('address')}
+                        errors={errors.address}
+                        touched={touched.address}
+                        onBlur={handleBlur}
+                    />
+                    <ModalDefaultInput
+                        name={'city'}
+                        label='City'
+                        placeholder='City'
+                        type='text'
+                        value={values.city}
+                        onChange={handleChange('city')}
+                        errors={errors.city}
+                        touched={touched.city}
+                        onBlur={handleBlur}
+                    />
+                    <ModalDefaultInput
+                        name={'postcode'}
+                        label='Post Code'
+                        placeholder='Post Code'
+                        type='text'
+                        value={values.postcode}
+                        onChange={handleChange('postcode')}
+                        errors={errors.postcode}
+                        touched={touched.postcode}
                         onBlur={handleBlur}
                     />
                     <div className="flex-col flex mb-4">

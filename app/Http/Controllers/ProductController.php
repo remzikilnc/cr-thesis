@@ -7,6 +7,7 @@ use App\Http\Requests\Post\StoreProductRequest;
 use App\Http\Requests\Post\UpdateProductRequest;
 use App\Jobs\IncrementModelViews;
 use App\Models\Category;
+use App\Models\Comment;
 use App\Models\Image;
 use App\Models\Product;
 use App\Services\Product\StoreProductData;
@@ -121,11 +122,11 @@ class ProductController extends BaseController
         // Detach associated categories
         $product->categories()->detach();
 
-        /* TODO: Delete associated reviews & comments
-            app(Review::class)
-                ->where('product_id', $productId)
-                ->delete();
-        */
+        // Delete Comments
+
+        app(Comment::class)
+            ->where('product_id', $product->id)
+            ->delete();
 
         $product->delete();
 

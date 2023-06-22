@@ -139,6 +139,9 @@ class UserRepository
         $formatted = [
             'first_name' => $params['first_name'] ?? null,
             'last_name' => $params['last_name'] ?? null,
+            'address' => $params['address'] ?? null,
+            'city' => $params['city'] ?? null,
+            'postcode' => $params['postcode'] ?? null,
         ];
 
         $formatted['email'] = $params['email'];
@@ -147,14 +150,14 @@ class UserRepository
             $formatted['email_verified_at'] = $params['email_verified_at'];
         }
 
-        if (isset($params['avatar_url'])) {
-            $formatted['avatar_url'] = $params['avatar_url'];
+        if (isset($params['gender'])) {
+            $formatted['gender'] = $params['gender'];
         }
 
         if ($type === 'create') {
             $formatted['password'] = Arr::get($params, 'password') ? Hash::make(($params['password'])) : null;
-        } else if ($type === 'update' && Arr::get($params, 'password')) {
-            $formatted['password'] = Hash::make(($params['password']));
+        } else if ($type === 'update' && Arr::get($params, 'old_password') && Arr::get($params, 'new_password')) {
+            $formatted['password'] = Hash::make($params['new_password']);
         }
 
         return $formatted;

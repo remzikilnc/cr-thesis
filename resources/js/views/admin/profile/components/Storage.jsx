@@ -5,8 +5,7 @@ import { BsCloudCheck } from "react-icons/bs";
 const Storage = () => {
   return (
     <Card extra={"w-full h-full p-4"}>
-      <div className="ml-auto">
-        <CardMenu />
+      <div className="ml-auto"><br/>
       </div>
       {/* Your storage */}
       <div className="mb-auto flex flex-col items-center justify-center">
@@ -20,8 +19,6 @@ const Storage = () => {
           Supervise your drive space in the easiest way
         </p>
       </div>
-
-      {/* Progress bar */}
 
       <div className="flex flex-col">
         <div className="flex justify-between">
