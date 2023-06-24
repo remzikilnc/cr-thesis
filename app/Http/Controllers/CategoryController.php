@@ -53,7 +53,6 @@ class CategoryController extends BaseController
         $this->authorize('update', Category::class);
 
         //todo !!BUG!! form-data olarak gönderilmiyor -> IMAGE uploadı ayrı bir api endpointiyle yapmak lazım..
-        $this->authorize('update', Category::class);
 
         $categoryData = array_filter($request->all(), function ($value) {
             // Boş veya null değerlerin var olan değerlerin üzerine yazılmasını önlüyooruz

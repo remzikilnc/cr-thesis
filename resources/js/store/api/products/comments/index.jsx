@@ -17,7 +17,14 @@ export const commentsApiSlice = apiSlice.injectEndpoints({
                     method: "GET",
                 };
             },
-        }), deleteComment: builder.mutation({
+        }),addComment: builder.mutation({
+            query: ({productId, comment}) => {
+                return {
+                    url: `/products/${productId}/comments`, method: 'POST', body: {comment},
+                };
+            },
+        }),
+        deleteComment: builder.mutation({
             query: ({productId, commentId}) => ({
                 url: `/products/${productId}/comments/${commentId}`,
                 method: "DELETE",
@@ -33,6 +40,7 @@ export const commentsApiSlice = apiSlice.injectEndpoints({
 })
 export const {
     useCommentsQuery,
+    useAddCommentMutation,
     useDeleteCommentMutation,
     useUpdateCommentMutation
 } = commentsApiSlice;

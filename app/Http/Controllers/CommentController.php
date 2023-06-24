@@ -13,14 +13,11 @@ use Illuminate\Http\Request;
 
 class CommentController extends BaseController
 {
-
     private Request $request;
-
     public function __construct(Request $request)
     {
         $this->request = $request;
     }
-
     /**
      * @throws AuthorizationException
      */
@@ -34,7 +31,6 @@ class CommentController extends BaseController
 
         return response()->ok(['pagination' => $pagination]);
     }
-
     /**
      * @throws AuthorizationException
      */
@@ -44,8 +40,6 @@ class CommentController extends BaseController
 
         return response()->ok($comment);
     }
-
-
     public function update(UpdateCommentRequest $request, Product $product, Comment $comment)
     {
         $this->authorize('update', $comment);
@@ -55,8 +49,6 @@ class CommentController extends BaseController
 
         return response()->ok($comment);
     }
-
-
     /**
      * @throws AuthorizationException
      */
@@ -73,7 +65,6 @@ class CommentController extends BaseController
 
         return response()->noContent();
     }
-
     /**
      * @throws AuthorizationException
      */

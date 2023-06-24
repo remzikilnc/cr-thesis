@@ -1,8 +1,9 @@
 import React, {useState} from "react";
 import Card from "@/components/admin/card";
 import {MdClose, MdModeEditOutline} from "react-icons/md";
+import {NavLink} from "react-router-dom";
 
-const ProductCard = ({title, description, price, quantity, code, poster, images, backdrop, extra, handleDelete, handleModify}) => {
+const ProductCard = ({title,id, description, price, quantity, code, poster, images, backdrop, extra, handleDelete, handleModify}) => {
     const [isHovered, setIsHovered] = useState(false);
 
     const posterImage = images.find(image => image.type === 'poster');
@@ -32,28 +33,28 @@ const ProductCard = ({title, description, price, quantity, code, poster, images,
                 extra={`flex flex-col w-full h-full rounded-b-none md:rounded-b-xl md:!rounded-r-none ${isHovered ? 'blur-sm' : ''} !p-4 3xl:p-![18px] bg-white ${extra}`}
             >
                 <div className="h-full w-full flex flex-row">
-                    <div className="h-full relative w-full md:w-1/6">
+                    <NavLink className="h-full relative w-full md:w-1/6" to={`/products/${id}`}>
                         <img
                             src={posterImage ? window.location.origin + '/' + posterImage.url : poster}
                             className="h-full w-full rounded object-cover rounded-xl"
                             style={{ width: "300px", height: "230px" }}
                             alt={title + ' poster'}
                         />
-                    </div>
+                    </NavLink>
                     <div className="justify-between w-full flex-colum md:flex md:flex-row">
                         <div
                             className="ml-3 flex items-center justify-between px-1 flex-col items-start flex-col items-start ">
                             <div className="mb-2">
-                                <p className="xl:text-lg text-xs font-bold text-navy-700 dark:text-white ">
+                                <NavLink to={`/products/${id}`} className="xl:text-lg text-xs font-bold text-navy-700 dark:text-white ">
                                     {" "}
                                     {title}{" "}
-                                </p>
+                                </NavLink>
                                 <p className="mt-1 pr-10 text-xs xl:text-md font-medium text-gray-600 md:mt-2 line-clamp-2 ">
                                     {description}
                                 </p>
                             </div>
                             <div className="flex start-0 self-start md:mt-2 lg:mt-0 flex-row-reverse hidden md:flex">
-                                {backdrops.length > 3 && <span
+                                {backdrops.length > 3 && <NavLink to={`/products/${id}`}
                                     className="z-0 ml-[-2px] xl:ml-[-10px] w-[50px]
                                     ml-px inline-flex max-h-[90px] xl:w-[90px] items-center
                                     justify-center rounded border-2 border-white bg-[#E0E5F2]
@@ -61,9 +62,9 @@ const ProductCard = ({title, description, price, quantity, code, poster, images,
                                     dark:text-white"
                                 >
                                     +{backdrops.length - 3}
-                                </span>}
+                                </NavLink>}
                                 {backdrops.slice(0, 3).map((img, key) => (
-                                    <span
+                                    <NavLink to={`/products/${id}`}
                                     key={key}
                                     className="z-10 -mr-5 max-h-[100px] max-w-[100px] rounded border-2
                                      border-white dark:!border-navy-800 shadow-2xl"
@@ -74,7 +75,7 @@ const ProductCard = ({title, description, price, quantity, code, poster, images,
                                     style={{width: "90px", height: "85px"}}
                                     alt={title + ' images'}
                                 />
-                                </span>))}
+                                </NavLink>))}
                             </div>
                         </div>
                         <div className="flex items-center flex-col justify-center ml-4 mt-2 md:m-0 ">

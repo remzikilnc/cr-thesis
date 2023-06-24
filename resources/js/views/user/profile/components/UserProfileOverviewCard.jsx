@@ -18,8 +18,8 @@ const UserProfileOverviewCard = (props) => {
     return (<Card extra={"w-full p-[40px] bg-cover !rounded-b-none"}>
         {/* Background and profile */}
         <div>
-            <h2 className={"font-semibold text-xl"}>Profil bilgileri</h2>
-            <p className={"py-2"}>Gereken bilgilerinizi buradan düzenleyebilirsiniz.
+            <h2 className={"font-semibold text-xl"}>Profile Information</h2>
+            <p className={"py-2"}>You can edit your profile here.
             </p>
         </div>
         <UserProfileEdit user={data?.data?.user} handleFormSubmit={handleFormSubmit}></UserProfileEdit>

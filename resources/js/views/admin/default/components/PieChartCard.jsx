@@ -5,6 +5,7 @@ import {getRandomColor} from "@/utils/randomColor";
 
 const PieChartCard = (props) => {
     const {pieChartFooterParentCount, pieChartFooterChildCount } = props;
+    const {title,footerParentTitle, footerChildTitle, bottomRight} = props;
     const arrayData = Object.values(props.pieChartData).filter(item => typeof item === 'object');
         pieChartOptions.labels = arrayData.map(item => item.category);
         const pieChartData = arrayData.map(item => item.count);
@@ -14,7 +15,7 @@ const PieChartCard = (props) => {
       <div className="flex flex-row justify-between px-3 pt-2">
         <div>
           <h4 className="text-lg font-bold text-navy-700 dark:text-white ">
-             Products/Category
+              {title}
           </h4>
         </div>
       </div>
@@ -25,7 +26,7 @@ const PieChartCard = (props) => {
       <div className="flex flex-row !justify-between rounded-2xl px-6 py-3 shadow-2xl shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none">
         <div className="flex flex-col items-center justify-center">
           <div className="flex items-center justify-center">
-            <p className="ml-1 text-sm font-normal text-gray-600">Parent Category</p>
+            <p className="ml-1 text-sm font-normal text-gray-600">{footerParentTitle}</p>
           </div>
           <p className="mt-px text-xl font-bold text-navy-700  dark:text-white">
               {pieChartFooterParentCount}
@@ -36,7 +37,7 @@ const PieChartCard = (props) => {
 
         <div className="flex flex-col items-center justify-center">
           <div className="flex items-center justify-center">
-            <p className="ml-1 text-sm font-normal text-gray-600">Child Category</p>
+            <p className="ml-1 text-sm font-normal text-gray-600">{footerChildTitle}</p>
           </div>
           <p className="mt-px text-xl font-bold text-navy-700 dark:text-white">
               {pieChartFooterChildCount}
@@ -47,7 +48,7 @@ const PieChartCard = (props) => {
 
           <div className="flex flex-col items-center justify-center">
               <div className="flex items-center justify-center">
-                  <p className="ml-1 text-sm font-normal text-gray-600">Parent/Child</p>
+                  <p className="ml-1 text-sm font-normal text-gray-600">{bottomRight}</p>
               </div>
               <p className="mt-px text-xl font-bold text-navy-700 dark:text-white">
                   {'% '+((pieChartFooterChildCount / pieChartFooterParentCount) * 100).toFixed(2)}

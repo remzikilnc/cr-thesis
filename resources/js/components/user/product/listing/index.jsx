@@ -21,6 +21,7 @@ function UserProductListing(props) {
             <div className="z-20 grid grid-cols-2 gap-5 md:grid-cols-2">
                 {productList.map(({id, title, description, quantity, price, code, images}) => (<ProductCard
                     key={id}
+                    id={id}
                     title={title}
                     description={description}
                     price={price}

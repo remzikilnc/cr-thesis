@@ -51,9 +51,7 @@ class DashboardController extends BaseController
         }
 
         // Parent Kategorilerin sahip olduğu ürün sayısı
-
         $CategoriesHaveProduct = $this->countItemsInAllParentCategories();
-
 
         // Toplam kayıtlı kullanıcı sayısı
         $totalUsersCount = User::count();

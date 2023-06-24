@@ -2,6 +2,7 @@ import React from 'react';
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import {NavLink} from "react-router-dom";
 
 const ProductSlider = ({ products }) => {
     const settings = {
@@ -45,15 +46,15 @@ const ProductSlider = ({ products }) => {
             <Slider {...settings}>
                 {products.map((product) => (
                     <div key={product.id} className={"border-[1px] border-gray-200 flex hover:drop-shadow-2xl mb-3"}>
-                        <a className={"cursor-pointer flex flex-col overflow-hidden py-5 px-3 pb-5"}>
+                        <NavLink to={`/products/${product.id}`} className={"cursor-pointer flex flex-col overflow-hidden py-5 px-3 pb-5"}>
                             <span className={"text-center overflow-hidden text-gray-800 mb-3 mt-1 h-7 p-0 text-xs leading-none"}>{product.title}</span>
                             <div className="inset-0 z-0 w-full flex justify-center">
                                 <picture>
-                                    <img className={"w-[200px] "} src={product.images && product.images[0] ? product.images[0]['url'] : ''} alt={product.name} />
+                                    <img className={"w-[200px] h-[200px] object-cover"} src={product.images && product.images[0] ? product.images[0]['url'] : ''} alt={product.name} />
                                 </picture>
                             </div>
                             <span className="text-center mt-3 text-blue-500 text-lg font-semibold">{product.price} <span className="text-sm">TL</span></span>
-                        </a>
+                        </NavLink>
                     </div>
                 ))}
             </Slider>
