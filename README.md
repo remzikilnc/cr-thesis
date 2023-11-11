@@ -1,77 +1,93 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# About CRThesis
 
-## About Laravel
+I developed a robust e-commerce platform using **Laravel** for backend functionality,
+including user authentication, product, user management. On the frontend,
+I utilized **React** to create an interactive and dynamic user interface with features like product listing,
+shopping cart, and checkout process.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Additionally, I integrated an **artificial intelligence-based comment
+filtering system** for enhanced user experience.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
-
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
-
-Require: extension=sodium in php.ini
+The combination of **Laravel, React, and AI** technologies resulted
+in a scalable and efficient e-commerce solution, offering seamless shopping experiences along with advanced
+features like comment filtering and recommendations.
 
 
-# [React](https://reactjs.org/) &middot; [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/facebook/react/blob/main/LICENSE) [![npm version](https://img.shields.io/npm/v/react.svg?style=flat)](https://www.npmjs.com/package/react) [![CircleCI Status](https://circleci.com/gh/facebook/react.svg?style=shield)](https://circleci.com/gh/facebook/react) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://reactjs.org/docs/how-to-contribute.html#your-first-pull-request)
+# Endpoints
+Method:POST/api/v1/auth/login
 
-React is a JavaScript library for building user interfaces.
+Method:POST /api/v1/auth/register
 
-* **Declarative:** React makes it painless to create interactive UIs. Design simple views for each state in your application, and React will efficiently update and render just the right components when your data changes. Declarative views make your code more predictable, simpler to understand, and easier to debug.
-* **Component-Based:** Build encapsulated components that manage their own state, then compose them to make complex UIs. Since component logic is written in JavaScript instead of templates, you can easily pass rich data through your app and keep the state out of the DOM.
-* **Learn Once, Write Anywhere:** We don't make assumptions about the rest of your technology stack, so you can develop new features in React without rewriting existing code. React can also render on the server using Node and power mobile apps using [React Native](https://reactnative.dev/).
-## Documentation
+Method: GET, POST, PUT, UPDATE, DELETE
+Endpoint:/api/v1/categories
 
-You can find the React documentation [on the website](https://reactjs.org/).
+Method:POST, GET
+Endpoint: /api/v1/product/{id}/comments
 
-Check out the [Getting Started](https://reactjs.org/docs/getting-started.html) page for a quick overview.
+Method:GET, PUT, DELETE
+Endpoint: /api/v1/product/{id}/comments/{id}
+
+Method:GET
+Endpoint: /api/v1/admin/dashboard
+
+Method:DELETE
+Endpoint: /api/v1/products/{id}
+
+Method:GET
+Endpoint: /api/v1/products
+
+Method:GET, PUT
+Endpoint/api/v1/products/{id}
+
+Method:GET
+Endpoint: /api/v1/product/{id}
+
+Method:DELETE, PUT
+Endpoint: /api/v1/users/{id}
+
+Method: GET
+Endpoint: /api/v1/users
+
+# Screenshots
+
+### Login
+
+![loginfront.png](screenshoots%2Floginfront.png)
+
+### Register
+
+![registerfront.png](screenshoots%2Fregisterfront.png)
+
+**Dashboard**
+
+![dashboard.png](screenshoots%2Fdashboard.png)
+
+### Product List
+
+**UPDATE**
+![singleproduct.png](screenshoots%2Fsingleproduct.png)
+**Single Product**
+![singlleProduct.png](screenshoots%2FsinglleProduct.png)
+
+### Comments
+
+![comments.png](screenshoots%2Fcomments.png)
+
+### User Listing
+
+![user-listing.png](screenshoots%2Fuser-listing.png)
+
+### User Edit
+
+![useredit.png](screenshoots%2Fuseredit.png)
+
+### User Profile Edit
+
+![userprofileedit.png](screenshoots%2Fuserprofileedit.png)
+
+### User Edit
+
+![useredit.png](screenshoots%2Fuseredit.png)
 
 
-* [Tutorial](https://reactjs.org/tutorial/tutorial.html)
-
-
-## Installing a Dependency
-
-The generated project includes React and ReactDOM as dependencies. It also includes a set of scripts used by Create React App as a development dependency. You may install other dependencies (for example, React Router) with `npm`:
-
-```
-npm install 
-```
-
-
-## Available Scripts
-
-In the project directory, you can run:
-
-### `npm run dev`
-
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
-
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
-
-See the section about [deployment](#deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+# . . .
